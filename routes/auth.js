@@ -41,12 +41,14 @@ router.get('/callback', (req, res, next) => {
 // /////////
 // Perform session logout and redirect to homepage
 router.get('/logout', (req, res) => {
-  let returnTo = req.protocol + '://' + req.hostname;
+  req.logout();
+  let returnTo = req.protocol + '://' + req.hostname; /* process.env.AUTH0_DOMAIN; */
+  // let returnTo = req.protocol + '://' + req.hostname;
   const port = req.connection.localPort;
   if (port !== undefined && port !== 80 && port !== 443) {
-    returnTo = process.env.NODE_ENV === 'production' ? `${returnTo}/` : `${returnTo}`;
+    returnTo = process.env.NODE_ENV === 'STAGING' || 'PRODUCTION' ? `${returnTo}/` : `${returnTo}:${port}/`;
   }
-  req.logout();
+
 
   if (req.session) {
     req.session.destroy(function(err) {
@@ -55,12 +57,15 @@ router.get('/logout', (req, res) => {
       }
       console.log('Destroyed the user session on Auth0 endpoint');
 
+      // https://auth0.com/docs/dev-lifecycle/work-with-auth0-locally
+      // fix auth0 local testing logout url redirect
       const logoutURL = new url.URL(
+          // %s, gets replaced with the value of process.env.AUTH0_DOMAIN
           util.format('https://%s/v2/logout', process.env['AUTH0_DOMAIN' + envString]),
       );
       const searchString = querystring.stringify({
-        client_id: process.env['AUTH0_CLIENT_ID' + envString],
-        returnTo: returnTo,
+        client_id: process.env.AUTH0_CLIENT_ID,
+        returnTo: returnTo || '/dashboard',
       });
       logoutURL.search = searchString;
 

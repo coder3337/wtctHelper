@@ -83,4 +83,4 @@ bookingSchema.path('customerEmail').validate((val) => {
   return emailRegex.test(val);
 }, 'Invalid e-mail.');
 
-module.exports = mongoose.model('Booking', bookingSchema);
+module.exports = mongoose.model('Booking', bookingSchema, process.env['MONGODB' + envString] );
