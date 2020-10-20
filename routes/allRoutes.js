@@ -169,7 +169,7 @@ router.get('/calendar', secured(), (req, res, next) => {
       }
     });
   }
-  // opCalendarLink = process.env.NODEMAILER_WTCT_PRODUCTION; // FOR TESTING PER OP CAL RENDERING
+  // opCalendarLink = process.env.NODEMAILER_WTCT_PRODUCTION; // FOR STAGING PER OP CAL RENDERING
   // switch calendar link depending on OP logged in
 
   res.render('calendar', {

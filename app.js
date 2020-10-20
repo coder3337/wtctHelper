@@ -10,14 +10,14 @@ env = process.env.NODE_ENV;
 envString = env;
 // GOOGLE_SHEET_ID = process.env['GOOGLE_SHEET_ID_' + envString];
 console.log('Environment:', process.env.NODE_ENV);
-
+console.log('Hostname:', process.env['HOST' + envString]);
 const wake = require('./wakeUpDyno.js');
 const DYNO_URL = process.env.DYNOURL;
 wake(DYNO_URL);
 const express = require('express');
 const path = require('path');
 // const bodyParser = require('body-parser');
-const hostname = process.env['HOST' + envString] || '0.0.0.0'; // must be 0.0.0.0 on heroku
+const hostname = process.env['HOST' + envString]; // must be 0.0.0.0 on heroku
 const session = require('express-session');
 // Load Passport
 const passport = require('passport');
@@ -33,7 +33,7 @@ const securedRoutes = require('./routes/allRoutes');
 // config express-session
 const sess = {
   // https://www.npmjs.com/package/express-session#secret
-  secret: 'LoxodontaErimeMasdfsmmuthlephasPusPadeoloonlephlaxoas',
+  secret: process.env.AUTH0_SESSION_SECRET,
   cookie: {},
   resave: false,
   saveUninitialized: false,
@@ -43,15 +43,15 @@ const postRoutes = require('./routes/bookingController');
 // Configure Passport to use Auth0
 const strategy = new Auth0Strategy(
     {
-      domain: process.env['AUTH0_DOMAIN' + envString],
-      clientID: process.env['AUTH0_CLIENT_ID' + envString],
-      clientSecret: process.env['AUTH0_CLIENT_SECRET' + envString],
+      domain: process.env.AUTH0_DOMAIN,
+      clientID: process.env.AUTH0_CLIENT_ID,
+      clientSecret: process.env.AUTH0_CLIENT_SECRET,
       callbackURL:
-      // use below when testing
+      // use below when STAGING
       /* 'http://localhost:8000/callback' || process.env['AUTH0_CALLBACK_URL' + envString], */
 
       // use below when going live
-      process.env['AUTH0_CALLBACK_URL' + envString] || 'http://localhost:8000/callback',
+        process.env['AUTH0_CALLBACK_URL' + envString],
     },
     function(accessToken, refreshToken, extraParams, profile, done) {
     // accessToken is the token to call Auth0 API (not needed in the most cases)

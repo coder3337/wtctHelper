@@ -1,5 +1,5 @@
 {
-  "name": "wtctHelperApp",
+  "name": "wtcthelperapp",
   "version": "1.0.0",
   "description": "",
   "author": "Josh W",
@@ -10,6 +10,7 @@
     "node": "10.15.1"
   },
   "scripts": {
+    "start": "node app.js",
     "dev": "nodemon ./app.js",
     "ui": "browser-sync start --proxy=localhost:8000 --files='**/*.css, **/*.pug, **/*.js' --ignore=node_modules --reload-delay 10 --no-ui --no-notify"
   },
