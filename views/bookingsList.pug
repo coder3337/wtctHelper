@@ -1,0 +1,92 @@
+extends head
+block content
+  div.bookingsList
+    div.container-fluid.bg-white.py-2
+      div.view.bookingsList
+        div.flex-container.flex-row
+          div.title.flex-grow-1.float-left 
+            h3 #{viewTitle}
+            if saveUnsuccessful
+              p.alert.alert-danger(role="alert") #{saveUnsuccessful}
+            else if saveSuccessful
+              p.alert.alert-success(role="alert") #{saveSuccessful}
+          div.p-2.actionMenu-2.float-right
+            a(href="/add")
+              button.px-5.btn.btn-primary
+                i.fa.fa-plus-square(aria-hidden=true)
+                span  Add a Booking
+          //-div.p-2.actionMenu-2.float-right
+              button.btn.btn-block.btn-danger(type='submit' form='bookingsToDelete' value='Submit' ) 
+                //- href="/add/" + booking._id 
+                i.fa.fa-minus-square(aria-hidden=true)
+                  span  Delete
+          div.p-2.actionMenu-2.float-right
+            button#delete.btn.btn-danger(type='submit' form='bookingsToDelete' value='Submit' onclick="return confirmDelete()")
+              //-i.fa.fa-minus-square(aria-hidden=true)  
+              span Delete 
+              span.deleteCounter.badge.badge-light
+        table#list.table-sm.table.small
+          thead.thead-dark.small
+            tr
+              th 
+              th Tour Date
+              th Name
+              //-> th Last
+              th Pickup
+              th Pax
+              th Paid  
+              th Phone
+              th Email
+              th OP
+              th Type
+              th Guide
+              th Notes
+              th 
+              th 
+              th Booked
+              th Referrer
+          form#bookingsToDelete(
+            action='/list/batchDelete'
+            method='POST'
+            autocomplete='off'
+            )
+            tbody
+              each doc in list
+                -var id = doc._id;
+                tr
+                  td 
+                    input.form-control(type='checkbox' name='ids[]' id='doc._id' value=doc._id onclick='return selectedForDelete();' )
+                  td.bg-blue= doc.tourDate
+                  td
+                    a(href="/edit/" + doc._id)
+                      b= doc.firstName + ' ' + doc.lastName
+                  //- td= doc.lastName
+                  td  
+                    a(data-toggle="popover" title="Pickup Address" data-content= doc.pickupAddress
+                    ) 
+                      u View
+                  td= doc.pax
+                  td= doc.paidStatus
+                  td= doc.phone
+                  td= doc.customerEmail
+                  td= doc.operatorName
+                  td= doc.tourType
+                  td
+                    a(data-toggle="popover" title="Guide Details" data-html="true" data-content= doc.guidesName + '<br> ' + doc.guidesEmail
+                      ) 
+                        u View
+                  td
+                    a(data-toggle="popover" title="Notes" data-html="true" data-content= doc.notes
+                      ) 
+                        u View
+                  td
+                    a.btn.btn-outline-info.btn-sm(href="/edit/" + doc._id)
+                      i.fa.fa-pencil.fa-xs(
+                      aria-hidden=true data-toggle="tooltip" data-placement="top" title="Edit booking"
+                      )  
+                  td
+                    a.btn.btn-outline-danger.btn-sm( href="/delete/" + doc._id onclick="return confirmDelete()")
+                      i.fa.fa-trash.fa-xs(aria-hidden=true data-toggle="tooltip" data-placement="top" title="Delete booking")                        
+                  td= doc.dateBooked
+                  td= doc.referrer
+                  

@@ -1,0 +1,192 @@
+extends head
+block scripts
+  script(src="/custom.js")
+block content
+  div.addBooking
+    div.container-fluid.bg-white.py-2 
+      div.row.view.bookingsList
+        div.col-md-12.offset-md-0
+          h3 #{viewTitle}
+          if saveUnsuccessful
+            p.alert.alert-danger(role="alert") #{saveUnsuccessful}
+          else if saveSuccessful
+            p.alert.alert-success(role="alert") #{saveSuccessful}
+          p Enter booking details here and hit send to save.
+          form(
+            action='/edit'
+            method='POST'
+            autocomplete='off'
+            )
+            input(type='hidden' name='_id' value= `${booking._id}`)
+            input(type='hidden' name='clientReminderSent' value= `${booking.clientReminderSent}` )
+            input(type='hidden' name='bookingCreatedSent' value= `${booking.bookingCreatedSent}` )
+            input(type='hidden' name='calendarEventCreated' value= `${booking.calendarEventCreated}` )
+            input(type='hidden' name='remindGoCapeGuides' value= `${booking.remindGoCapeGuides}` )
+            input(type='hidden' name='remindOperators' value= `${booking.remindOperators}` )
+            input(type='hidden' name='feedbackSent' value= `${booking.feedbackSent}` )
+            div.form-row 
+              div.form-group.col-md-3
+                label First Name
+                input.form-control(
+                  type='text'
+                  name='firstName'
+                  placeholder='First Name' 
+                  value= `${booking.firstName}`
+                  )
+                div.text-danger #{booking.firstNameError}
+              div.form-group.col-md-3
+                label Last Name
+                input.form-control(
+                  type='text'
+                  name='lastName'
+                  placeholder='Last Name' 
+                  value= `${booking.lastName}`
+                  )
+                div.text-danger #{booking.lastNameError}
+              div.form-group.col-md-3
+                label Email
+                input.form-control(
+                  type='text'
+                  name='customerEmail'
+                  placeholder='Customers Email Address'
+                  value= `${booking.customerEmail}`
+                  )  
+                div.text-danger #{booking.customerEmailError}
+              div.form-group.col-md-2
+                label Phone
+                input.form-control(
+                  type='text'
+                  name='phone'
+                  placeholder='+27 82 123 4567' 
+                  value= `${booking.phone}`
+                  )
+                div.text-danger #{booking.phoneError}
+              div.form-group.col-md-1
+                label Pax
+                input.form-control(
+                  type='text'
+                  name='pax'
+                  placeholder='Pax' 
+                  value= `${booking.pax}`
+                  )
+                div.text-danger #{booking.paxError}
+            div.form-row
+              div.form-group.col-md-1
+                label Operator
+                select.form-control#operatorName(
+                  type='select'
+                  name='operatorName'
+                  value=`${booking.operatorName}`
+                  selected=`${booking.operatorName}`
+                  )
+                  option(value=`${booking.operatorName}` onchange='' selected='selected' hidden='hidden') #{booking.operatorName}
+                  option AS
+                  option GC
+                  option AV
+                div.text-danger #{booking.operatorNameError}
+              div.form-group.col-md-2
+                label Tour Type
+                select.form-control#tourType(
+                  type='select'
+                  name='tourType'
+                  value=`${booking.tourType}`
+                  selected=`${booking.tourType}`
+                  )
+                  option(value=`${booking.tourType}`  selected='selected' hidden='hidden') #{booking.tourType}
+                  option Group
+                  option Private
+                  option Chauffeur Drive
+                div.text-danger #{booking.tourTypeError}
+              div.form-group.col-md-3
+                label Date Booked
+                input.form-control(
+                  type='date'
+                  name='dateBooked'
+                  placeholder='Date Booked' 
+                  value= `${booking.dateBooked}`
+                  )
+                div.text-danger #{booking.dateBookedError}
+              div.form-group.col-md-3
+                label Tour Date
+                input.form-control(
+                  type='date'
+                  name='tourDate'
+                  placeholder='Tour Date' 
+                  value= `${booking.tourDate}`
+                  )
+                div.text-danger #{booking.tourDateError}
+            div.form-row#guideDetails 
+              div.form-group.col-md-3
+                label Guides Name
+                input.form-control#guidesName(
+                  type='text'
+                  name='guidesName'
+                  placeholder='Guides Name' 
+                  value= `${booking.guidesName}`
+                  )
+              div.form-group.col-md-3
+                label Guides Email
+                input.form-control(
+                  type='text'
+                  name='guidesEmail'
+                  placeholder='Guides Email'
+                  value= `${booking.guidesEmail}`
+                  )  
+            div.form-row 
+              div.form-group.col-md-4
+                label Pickup Address
+                textarea.form-control(
+                  type='textarea'
+                  name='pickupAddress'
+                  placeholder='Address..'
+                  value=`${booking.pickupAddress}`
+                  )=`${booking.pickupAddress}`
+                div.text-danger #{booking.pickupAddressError}
+              div.form-group.col-md-2
+                label Paid Status
+                select#customPmtAmount.form-control(
+                  type='select'
+                  name='paidStatus'
+                  value=`${booking.paidStatus}`
+                  onchange="if(this.options[this.selectedIndex].value=='[custom amount]'){toggleField(this,this.nextSibling); this.selectedIndex='0';}"
+                  )=`${booking.paidStatus}`
+                  //- option(value='' selected='selected' hidden='hidden') Tour Type
+                  option(value='' selected='selected' hidden='hidden') #{booking.paidStatus}
+                  option.value='0%'
+                  option.value='50%'
+                  option.value='100%'
+                  option.value='[custom amount]'
+                  input#customPmtAmount.form-control(name="paidStatus" style="display:none;" disabled="disabled" onblur="if(this.value==''){toggleField(this,this.previousSibling);}")
+                div.text-danger #{booking.paidStatusError}
+              div.form-group.col-md-3
+                label Notes
+                textarea.form-control(
+                  type='textarea'
+                  name='notes'
+                  placeholder='notes' 
+                  value= `${booking.notes}`
+                  )
+                div.text-danger #{booking.notesError}
+              div.form-group.col-md-3#referrer
+                label Referrered By
+                input.form-control(
+                  type='text'
+                  name='referrer'
+                  placeholder='Referrer' 
+                  value= `${booking.referrer}`
+                  )
+              div.text-danger #{booking.referrerError}
+            div.form-row
+              div.form-row.col-md-10
+                div.col-md-3
+                  button.btn.btn-block.btn-primary(type='submit' href="/edit/" + booking._id ) 
+                    i.fa.fa-plus-square(aria-hidden=true)
+                    span  Update   
+                div.col-md-2
+                  a.btn.btn-block.btn-outline-info(href="/list")  
+                    i.fa.fa-list-alt(aria-hidden=true)
+                    span  View All.. 
+                div.col-md-3 
+                  pre DB ID: 
+                    b= `${booking._id}` 
+                            

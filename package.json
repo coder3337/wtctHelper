@@ -1,0 +1,39 @@
+{
+  "name": "wtctHelperApp",
+  "version": "1.0.0",
+  "description": "",
+  "author": "Josh W",
+  "license": "MIT",
+  "main": "app.js",
+  "engines": {
+    "npm": "6.13.4",
+    "node": "10.15.1"
+  },
+  "scripts": {
+    "dev": "nodemon ./app.js",
+    "ui": "browser-sync start --proxy=localhost:8000 --files='**/*.css, **/*.pug, **/*.js' --ignore=node_modules --reload-delay 10 --no-ui --no-notify"
+  },
+  "keywords": [],
+  "devDependencies": {
+    "browser-sync": "^2.26.12",
+    "eslint": "^7.10.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-plugin-import": "^2.22.1",
+    "nodemon": "^2.0.4"
+  },
+  "dependencies": {
+    "acorn": "^6.4.2",
+    "body-parser": "^1.19.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "googleapis": "^61.0.0",
+    "mongoose": "^5.10.8",
+    "node-fetch": "^2.6.1",
+    "nodemailer": "^6.4.13",
+    "passport": "^0.4.1",
+    "passport-auth0": "^1.3.3",
+    "pug": "^3.0.0",
+    "readline": "^1.3.0"
+  }
+}

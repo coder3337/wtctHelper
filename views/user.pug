@@ -1,0 +1,23 @@
+extends head
+block variables
+  - var test='test value'
+block content
+  div.userPage
+    div.container-fluid.bg-white.py-2
+      div.view.userPage
+        div.flex-container.flex-row
+          div.title.flex-grow-1.float-left 
+            h3 #{viewTitle}
+          div.clearfix  
+          div.userContentBlock
+            p name: #{name} 
+            p loggedInEmail: #{loggedInEmail} 
+            p Authed: #{isAuthenticated} 
+            p Profile Info: #{userProfile} 
+            //- p publicGlobalToken: #{publicGlobalToken} 
+            //-p Logged in as: #{test}  
+            //-p Logged in as: #{userProfile.emails[0].value}  
+        block footer
+          
+          p user footer
+          p #{test}
