@@ -55,19 +55,19 @@ module.exports = {
       if (operatorCode == 'AS') {
         operatorsBkColor = 2;
         attendeeOPemail = process.env['NODEMAILER_AS_' + envString];
-        gcalendarID = process.env['GOOGLE_CALENDAR_ID_AS'];
+        gcalendarID = process.env.GOOGLE_CALENDAR_ID_AS;
       } else if (operatorCode == 'GC') {
         operatorsBkColor = 5;
         attendeeOPemail = process.env['NODEMAILER_GC_' + envString];
-        gcalendarID = process.env['GOOGLE_CALENDAR_ID_GC'];
+        gcalendarID = process.env.GOOGLE_CALENDAR_ID_GC;
       } else if (operatorCode == 'AV') {
         operatorsBkColor = 9;
         attendeeOPemail = process.env['NODEMAILER_AV_' + envString];
-        gcalendarID = process.env['GOOGLE_CALENDAR_ID_AV'];
+        gcalendarID = process.env.GOOGLE_CALENDAR_ID_AV;
       } else {
         console.log('no event color selected');
       }
-      console.log(attendeeOPemail);
+      console.log('op mail', attendeeOPemail);
       console.log(gcalendarID);
       function createCalendarEntries(auth) {
         const calendar = google.calendar({version: 'v3', auth});
@@ -116,6 +116,7 @@ module.exports = {
               console.log('There was an error contacting the Calendar service while creating events: ' + err);
               return;
             }
+            // come back to this
             console.log('Event created: %s', `${event.htmlLink}`);
             // console.log(event)
           });
@@ -145,7 +146,7 @@ module.exports = {
       function listEvents(auth) {
         const calendar = google.calendar({version: 'v3', auth});
         calendar.events.list({
-          calendarId: 'primary',
+          calendarId: gcalendarID/* 'primary' */,
           timeMin: (new Date()).toISOString(),
           maxResults: 10,
           singleEvents: true,
