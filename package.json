@@ -10,9 +10,9 @@
     "node": "10.15.1"
   },
   "scripts": {
-    "start": "node app.js",
-    "dev": "nodemon ./app.js",
-    "ui": "browser-sync start --proxy=localhost:8000 --files='**/*.css, **/*.pug, **/*.js' --ignore=node_modules --reload-delay 10 --no-ui --no-notify"
+    "start": "node ./bin/www",
+    "dev": "nodemon -e * ./bin/www",
+    "ui": "browser-sync start --proxy localhost:8000 --files=**/*  --ignore=node_modules --reload-delay 10000 --no-ui --no-inject-changes"
   },
   "keywords": [],
   "devDependencies": {
