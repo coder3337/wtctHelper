@@ -1,0 +1,13 @@
+extends head
+block variables
+  - var test='test value'
+block content
+  div.userPage
+    div.container-fluid.bg-white.py-2
+      div.view.userPage
+        div.flex-container.flex-row
+          div.title.flex-grow-1.float-left 
+            h3 #{viewTitle}
+          div.clearfix  
+          div.userContentBlock all users
+            div= data

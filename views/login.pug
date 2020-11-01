@@ -1,0 +1,22 @@
+extends head
+block variables
+  - var test='test value'
+block content
+  div.userPage
+    div.container-fluid.bg-white.py-2
+      div.view.userPage
+        div.flex-container.flex-row
+          div.title.flex-grow-1.float-left 
+            h3 #{viewTitle}
+          div.clearfix  
+          div.userContentBlock
+            //-p 
+              img(src=`${pic}` alt='Profile Image')
+          form#addForm(action='/login' method='POST' autocomplete='on')
+            label Email
+            input.form-control(type='text' name='email' placeholder='Email' value='' )
+            label Password
+            input.form-control(type='text' name='password' placeholder='password' value='' )
+            button.btn.btn-sm.btn-primary(type='submit' ) Login
+            span.small 
+              a(href='/signup') or sign up here..

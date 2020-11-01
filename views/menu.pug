@@ -1,7 +1,9 @@
 div.header
   div.userDetailsBar.p-2.text-right
     i.fa.fa-user  
-    span  Hi #{name} (#{loggedInEmail})
+    span Hi! 
+      a(href='/user')= email 
+      //-span= ' (' + data.role + ') account'
       span
         a.btn.btn-primary.btn-sm.mx-2(href="/logout")
           i.fa.fa-sign-out
@@ -37,7 +39,7 @@ div.header
           a.nav-link.dropdown-toggle(href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
           ) Tools
           div.dropdown-menu(aria-labelledby="navbarDropdown")
-            a.dropdown-item(href="/user") User Details
+            a.dropdown-item(href="/user/" + userId) User Details
             a.dropdown-item(href="#") Search (use searchbox)  
             a.dropdown-item.disabled(href='/logs') Logs
             div.dropdown-divider

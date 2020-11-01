@@ -18,9 +18,9 @@ module.exports = {
             for (z = 0; z < matchLength; z++) {
               console.log('Found New Booking:', matchLength);
 
-              const ops = require('./sendNewBookings.js');
-              const calendar = require('./createCalendarEvents.js');
-              const updates = require('./updateOPBookSent.js');
+              const ops = require('./controllers/workers/sendNewBookings.js');
+              const calendar = require('./controllers/workers/createCalendarEvents.js');
+              const updates = require('./controllers/workers/updateOPBookSent.js');
               // console.log('name:', docs[z].firstName); // prints each name
               // if (docs[z].clientReminderSent === false) {
               ops.sendNewBookingsToOperators(docs, z, envString);
@@ -72,9 +72,9 @@ module.exports = {
 
               // console.log('name:', docs[z].firstName); // prints each name
               // if (docs[z].clientReminderSent === false) {
-              const clientRemind = require('./sendClientReminders.js');
+              const clientRemind = require('./controllers/workers/sendClientReminders.js');
               clientRemind.sendRemindClient(docs, z, envString);
-              const updateReminders = require('./updateClientReminderSent.js');
+              const updateReminders = require('./controllers/workers/updateClientReminderSent.js');
               updateReminders.updateClientReminder(docs, z, envString);
               // };
             }
@@ -118,9 +118,9 @@ module.exports = {
 
               // console.log('name:', docs[z].firstName); // prints each name
               // if (docs[z].clientReminderSent === false) {
-              const remindOP = require('./sendOpReminders.js');
+              const remindOP = require('./controllers/workers/sendOpReminders.js');
               remindOP.sendOperatorReminder(docs, z, envString);
-              const updateOpRemind = require('./updateRemindOP.js');
+              const updateOpRemind = require('./controllers/workers/updateRemindOP.js');
               updateOpRemind.remindOperators(docs, z, envString);
               // };
             }
@@ -164,9 +164,9 @@ module.exports = {
 
               // console.log('name:', docs[z].firstName); // prints each name
               // if (docs[z].clientReminderSent === false) {
-              const gcGuideRemind = require('./sendGCGuideReminders.js');
+              const gcGuideRemind = require('./controllers/workers/sendGCGuideReminders.js');
               gcGuideRemind.gcGuideSend(docs, z, envString);
-              const updateGCGuideReminders = require('./updateGCGuideRemind.js');
+              const updateGCGuideReminders = require('./controllers/workers/updateGCGuideRemind.js');
               updateGCGuideReminders.updateGCGuideSent(docs, z, envString);
               // };
             }
@@ -210,9 +210,9 @@ module.exports = {
 
               // console.log('name:', docs[z].firstName); // prints each name
               // if (docs[z].clientReminderSent === false) {
-              const fbr = require('./sendClientFeedback.js');
+              const fbr = require('./controllers/workers/sendClientFeedback.js');
               fbr.sendFeedbackRequests(docs, z, envString);
-              const getFeedback = require('./updateFeedbackSent.js');
+              const getFeedback = require('./controllers/workers/updateFeedbackSent.js');
               getFeedback.updateSendFeedback(docs, z, envString);
               // };
             }

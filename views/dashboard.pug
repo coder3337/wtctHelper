@@ -22,8 +22,14 @@ block content
               div.card-body
                 //- h5.card-title #{userProfile}
                 //- p.card-text Name: #{name}
-                p.card-text Name: #{name}
-                p.card-text Logged in as: #{loggedInEmail}
+                p= title
+                p= name
+                p= email
+                p= message
+                p= role
+                p= count + ' open bookings'
+                p.card-text Logged in as: 
+                 span= email
                 //- p.card-text publicGlobalToken: #{publicGlobalToken}
             div
               div.card.my-3 
@@ -36,6 +42,7 @@ block content
               div.card-header Messages, Notes / Major Changes
               div.card-body
                 div.card-text
+                  p.alert-danger.p-1= taskNotificationMsg
                   p.alert-warning.p-1 Calendar Page error: resolve by reloading page - in progress
                   p.alert-info.p-1 Working on CHD multiday tours
                   p.alert-warning.p-1 Remember to use STAGING email addresses when adding new customers or tour guides info.

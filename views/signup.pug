@@ -1,0 +1,19 @@
+extends head
+block variables
+  - var test='test value'
+block content
+  div.userPage
+    div.container-fluid.bg-white.py-2
+      div.view.userPage
+        div.flex-container.flex-row
+          div.title.flex-grow-1.float-left 
+            h3 #{viewTitle}
+          div.clearfix  
+          div.userContentBlock
+            //-p 
+              img(src=`${pic}` alt='Profile Image')
+          form#addForm(action='/signup' method='POST' autocomplete='on')
+            label Email
+              input.form-control(type='text' name='email' placeholder='Email to get bookings' value='' )
+              input.form-control(type='text' name='password' placeholder='Please select an email' value='' )
+              button.btn.btn-sm.btn-secondary(type='submit'  href="/user" ) Sign Up
