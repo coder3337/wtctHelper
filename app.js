@@ -4,10 +4,9 @@ require('./model/db');
 env = process.env.NODE_ENV;
 envString = env;
 console.log('Environment:', process.env.NODE_ENV);
-console.log('Hostname:', process.env['HOST' + envString]);
-
+// console.log('Hostname:', process.env['HOST' + envString]);
+const cookieSession = require('cookie-session');
 const express = require('express');
-const session = require('express-session');
 const jwt = require('jsonwebtoken');
 const path = require('path');
 const hostname = process.env['HOST' + envString]; // must be 0.0.0.0 on heroku
@@ -19,23 +18,44 @@ const userRoutes = require('./routes/userRoutes.js');
 // const allRoutes = require('./routes/allRoutes');
 const app = express();
 
-app.set('trust proxy', 0); // trust first proxy
-app.use(session({
+app.set('trust proxy', 1); // trust first proxy
+
+app.use(cookieSession({
+  name: 'session',
+  keys: ['key1', 'key2', 'key3', 'key4'],
+  maxAge: 24 * 60 * 60 * 1000, // 24 hours
+}));
+// app.set('trust proxy', 1); // trust first proxy
+/* app.use(cookieSession({
+  secret: 'thisismysecret',
+  maxAge: 24 * 60 * 60 * 1000, // 24 hours
+})); */
+
+// app.set('trust proxy', 0); // trust first proxy
+
+/* app.use(session({
+  name: 'tokenCheck',
   secret: 'keyboard cat',
   resave: false,
   saveUninitialized: true,
-  //cookie: {secure: true},
-}));
+  // cookie: {secure: true},
+})); */
+
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'pug');
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
+
 app.use(async (req, res, next) => {
-  if (req.headers['x-access-token']) {
+  console.log(req.session.accessToken);
+  if (req.session.accessToken) {
     try {
-      const accessToken = req.headers['x-access-token'];
+      const accessToken = req.session.accessToken;
       const {userId, exp} = await jwt.verify(accessToken, process.env.JWT_SECRET);
-      console.log('token check started');
+      console.log('Yaaayy!!! Token found!!');
       // If token has expired
       if (exp < Date.now().valueOf() / 1000) {
         return res.status(401).json({
@@ -43,19 +63,19 @@ app.use(async (req, res, next) => {
         });
       }
       res.locals.loggedInUser = await User.findById(userId);
-      // console.log('Time:', Date.now());
+      // req.session.loggedInUser = loggedInUser;
+      console.log('Time:', Date.now() + ' ' + res.locals.loggedInUser);
       next();
     } catch (error) {
       next(error);
     }
   } else {
-    console.log('nothing to show');
+    console.log('No token checked');
     next();
   }
 });
 
-// Middleware from here
-app.use('/', userRoutes);
+app.use(userRoutes);
 // app.use(userInViews());
 // app.use('/', allRoutes);
 

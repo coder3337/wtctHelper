@@ -71,23 +71,21 @@ exports.login = async (req, res, next) => {
   try {
     const {email, password} = req.body;
     const user = await User.findOne({email});
+
     if (!user) return next(new Error('Email does not exist'));
     const validPassword = await validatePassword(password, user.password);
+
     if (!validPassword) return next(new Error('Password is not correct'));
     const accessToken = jwt.sign({userId: user._id}, process.env.JWT_SECRET, {
       expiresIn: '1d',
     });
-    await User.findByIdAndUpdate(user._id, {accessToken});
-    /*     req.session.accessToken = accessToken;
-    req.session.token = {'x-access-token': accessToken}; */
 
-    // Set a new cookie with the name
-    res.header('Authorization', 'Bearer ' + [accessToken]);
-    res.header('Access-Control-Expose-Headers', 'x-access-token');
-    res.cookie('x-access-token', accessToken, {
-      expires: new Date(Date.now() + 8 * 3600000), // cookie will be removed after 8 hours
-    });
-    /* {httpOnly: true, secure: true, signed: true} */
+    await User.findByIdAndUpdate(user._id, {accessToken});
+    // res.header('authorization', 'Bearer ' + [accessToken]);
+    req.session._id = user._id;
+    req.session.email = user.email;
+    req.session.role = user.role;
+    req.session.accessToken = accessToken;
 
     res.status(200).json({
       data: {email: user.email, role: user.role},
@@ -98,6 +96,25 @@ exports.login = async (req, res, next) => {
   }
 };
 
+// res.locals.loggedInUser = accessToken;
+// add token to req.session
+// req.session.token = {'authorization': 'Bearer' + accessToken};
+
+// Update views
+// req.session.accessToken = accessToken;
+
+// Write response
+// res.end(req.session.views + ' views');
+
+//    req.session.accessToken = accessToken;
+// Set a new cookie with the name
+
+// res.header('Access-Control-Expose-Headers', 'authorization');
+// have a cookie if needed
+/* res.cookie('x-access-token', accessToken, {
+  expires: new Date(Date.now() + 8 * 3600000), // cookie will be removed after 8 hours
+}); */
+/* {httpOnly: true, secure: true, signed: true} */
 
 // get one user
 exports.getUser = async (req, res, next) => {
