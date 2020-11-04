@@ -9,8 +9,7 @@ const cookieSession = require('cookie-session');
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const path = require('path');
-const hostname = process.env['HOST' + envString]; // must be 0.0.0.0 on heroku
-const port = process.env.PORT || '8000';
+//const port = process.env.PORT || '8000';
 
 const User = require('./model/userModel');
 const userRoutes = require('./routes/userRoutes.js');
@@ -34,7 +33,9 @@ app.set('view engine', 'pug');
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(express.json());
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({ extended: true }));
+
+app.use(userInViews());
 
 app.use(async (req, res, next) => {
   // console.log(req.session.accessToken);
@@ -49,18 +50,16 @@ app.use(async (req, res, next) => {
           error: 'JWT token has expired, please login to obtain a new one',
         });
       }
-      // Update a value in the cookie so that the set-cookie will be sent.
-      // Only changes every minute so that it's not sent with every request.
 
       res.locals.loggedInUser = await User.findById(userId);
-      // console.log(res.locals.loggedInUser);
+      // console.log(res.locals.loggedInUser); // full object
       res.locals.id = req.session.id;
       res.locals.email = req.session.email;
       res.locals.role = req.session.role;
       res.locals.accessToken = req.session.accessToken;
       res.locals.loggedInFor = req.session.loggedInFor;
-      // req.session.loggedInUser = loggedInUser;
       console.log('Time:', Date.now() + ' ' + res.locals.loggedInUser);
+      
       next();
     } catch (error) {
       next(error);
@@ -71,11 +70,11 @@ app.use(async (req, res, next) => {
   }
 });
 
+
 app.use(userRoutes);
-app.use(userInViews());
 // app.use('/', allRoutes);
 
-app.listen(port, hostname, () => {
+/* app.listen(port, hostname, () => {
   console.log(`Server started port http://localhost:${port}`);
-});
+}); */
 module.exports = app;

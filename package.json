@@ -10,10 +10,10 @@
     "node": "10.15.1"
   },
   "scripts": {
-    "start": "node app.js",
-    "debug": "set DEBUG=express:* & node app.js",
-    "dev": "nodemon -e * app.js",
-    "ui": "browser-sync start --proxy localhost:8000 --files=**/*  --ignore=node_modules --reload-delay 1000 --no-ui --no-inject-changes"
+    "start": "node ./bin/www",
+    "debug": "set DEBUG=express:* & node ./bin/www",
+    "dev": "nodemon -e * ./bin/www",
+    "ui": "browser-sync start --proxy localhost:8000 --files=**/*  --ignore=node_modules --reload-delay 1000 --no-ui --no-notify --no-inject-changes"
   },
   "keywords": [],
   "devDependencies": {
@@ -27,11 +27,14 @@
     "accesscontrol": "^2.2.1",
     "bcrypt": "^5.0.0",
     "cookie-session": "^1.4.0",
+    "debug": "^4.2.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "googleapis": "^61.0.0",
+    "http-errors": "^1.8.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.10.8",
+    "morgan": "^1.10.0",
     "node-fetch": "^2.6.1",
     "nodemailer": "^6.4.13",
     "pug": "^3.0.0",
