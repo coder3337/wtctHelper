@@ -12,9 +12,9 @@ const path = require('path');
 const hostname = process.env['HOST' + envString]; // must be 0.0.0.0 on heroku
 const port = process.env.PORT || '8000';
 
-// const userInViews = require('./middleware/allUsersMiddle');
 const User = require('./model/userModel');
 const userRoutes = require('./routes/userRoutes.js');
+const userInViews = require('./middleware/allUsersMiddle');
 // const allRoutes = require('./routes/allRoutes');
 const app = express();
 
@@ -22,24 +22,12 @@ app.set('trust proxy', 1); // trust first proxy
 
 app.use(cookieSession({
   name: 'session',
-  keys: ['key1', 'key2', 'key3', 'key4'],
-  maxAge: 24 * 60 * 60 * 1000, // 24 hours
+  keys: ['key0'],
+  secure: false, // change later!
+  httpOnly: true, // change later!
+  maxAge: 1 * 60 * 60 * 1000, // 1 hours
+  //maxAge: 24 *60 * 60 * 1000, // 24 hours
 }));
-// app.set('trust proxy', 1); // trust first proxy
-/* app.use(cookieSession({
-  secret: 'thisismysecret',
-  maxAge: 24 * 60 * 60 * 1000, // 24 hours
-})); */
-
-// app.set('trust proxy', 0); // trust first proxy
-
-/* app.use(session({
-  name: 'tokenCheck',
-  secret: 'keyboard cat',
-  resave: false,
-  saveUninitialized: true,
-  // cookie: {secure: true},
-})); */
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
@@ -48,9 +36,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
-
 app.use(async (req, res, next) => {
-  console.log(req.session.accessToken);
+  // console.log(req.session.accessToken);
   if (req.session.accessToken) {
     try {
       const accessToken = req.session.accessToken;
@@ -62,7 +49,16 @@ app.use(async (req, res, next) => {
           error: 'JWT token has expired, please login to obtain a new one',
         });
       }
+      // Update a value in the cookie so that the set-cookie will be sent.
+      // Only changes every minute so that it's not sent with every request.
+
       res.locals.loggedInUser = await User.findById(userId);
+      // console.log(res.locals.loggedInUser);
+      res.locals.id = req.session.id;
+      res.locals.email = req.session.email;
+      res.locals.role = req.session.role;
+      res.locals.accessToken = req.session.accessToken;
+      res.locals.loggedInFor = req.session.loggedInFor;
       // req.session.loggedInUser = loggedInUser;
       console.log('Time:', Date.now() + ' ' + res.locals.loggedInUser);
       next();
@@ -70,13 +66,13 @@ app.use(async (req, res, next) => {
       next(error);
     }
   } else {
-    console.log('No token checked');
+    console.log('No token found');
     next();
   }
 });
 
 app.use(userRoutes);
-// app.use(userInViews());
+app.use(userInViews());
 // app.use('/', allRoutes);
 
 app.listen(port, hostname, () => {

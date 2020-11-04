@@ -7,10 +7,9 @@ module.exports = function() {
       docs = await Booking.find();
       const bookingsCount = docs.length;
       // res.locals.user = req.user;
-      res.app.locals = {
-        email: 'If you signed in your email would be here..',
-        // count: bookingsCount,
-      };
+    /*   app.locals = {
+        count: bookingsCount,
+      }; */
       // res.locals - An object that contains response local variables scoped to the request, and therefore available only to the view(s) rendered during that request / response cycle (if any).
       res.locals = {
         count: bookingsCount,
@@ -23,7 +22,7 @@ module.exports = function() {
         publicGlobalToken: '1234',
         taskNotificationMsg: 'Im a global msg ',
         message: 'Im also a global msg',
-        //email: data.email,
+        // email: data.email,
         // isAuthenticated: req.isAuthenticated(),
 
         // userProfile: req.user,

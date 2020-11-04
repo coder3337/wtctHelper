@@ -1,30 +1,21 @@
 extends head
 block content
+  block menu
+    include menu
   div.calendar
-    div.container-fluid.bg-white.py-2
+    div.container-sm.bg-white.py-2
       h3 #{viewTitle}
       //- p.alert.alert-danger(role="alert") #{events}
-      div 
-        //-  if events
-          div.card
-            div.card-header= events.start.date + ' ' + events.summary
-            div.card-body
-              h5.card-title= events.start.date + ' ' + events.summary
-              p.card-text= events.description 
-              events.start.date
-              a(href='')
-        div      
-        p
-        p
-        p
-        p Calendar link in use: #{opCalendarLink}   
-
-        //-iframe(iframe src="https://calendar.google.com/calendar/embed?src=" + `${opCalendarLink}` + "&ctz=Africa%2FJohannesburg" style="border:solid 0px #777" width="100%" height="600" frameborder="0" scrolling="no")
-        iframe(src="https://calendar.google.com/calendar/embed?src=" + `${opCalendarLink}` + "&ctz=Africa%2FJohannesburg" style="border:solid 0px #777" width="100%" height="600" frameborder="0" scrolling="no" )
-        //- iframe(iframe src="https://calendar.google.com/calendar/embed?ctz=Europe%2FLondon&src=" + process.env.GOOGLE_CALENDAR_ID_AV + "&amp;color=%0B8043&src=" + process.env.GOOGLE_CALENDAR_ID_AS + "&amp;color=%7CB342&src=" + process.env.GOOGLE_CALENDAR_ID_GC + "&amp;color=%E4C441" style="border: 0" width="100%" height="800" frameborder="0" scrolling="no")
-        //-iframe(iframe src="https://calendar.google.com/calendar/embed?src=" + process.env.GOOGLE_CALENDAR_ID_AS + "&" + process.env.GOOGLE_CALENDAR_ID_AV + "&" + process.env.GOOGLE_CALENDAR_ID_GC + "&" + "ctz=Africa%2FJohannesburg" style="border:solid 0px #777" width="100%" height="600" frameborder="0" scrolling="no")
-        //-iframe(iframe src="https://calendar.google.com/calendar/b/0/embed?height=600&amp;wkst=1&amp;bgcolor=%23ffffff&amp;ctz=Africa%2FJohannesburg&amp;src=d3RjdGhlbHBlckBnbWFpbC5jb20&amp;src=NHB2ZzA4ZWU4c25jbGZvMXJ0dmRhbDE2OG9AZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&amp;src=bTBrN3Y1Z3ZhcTc4b2Nwc2U3YTQxcGZibThAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&amp;src=bXRyajdjODI1cWVsY2M3M3BlYm5xcGcwY29AZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&amp;color=%2322AA99&amp;color=%235A9A08&amp;color=%231F753C&amp;color=%23D6AE00" style="border:solid 0px #777" width="100%" height="600" frameborder="0" scrolling="no")
-        //- iframe(src="https://calendar.google.com/calendar/embed?src=" + `${opCalendarLink}` + "&ctz=Africa%2FJohannesburg" style="border:solid 0px #777" width="100%" height="600" frameborder="0" scrolling="no")
-        if userProfile.emails[0].value == process.env.NODEMAILER_WTCT_PRODUCTION
-          iframe(src="https://calendar.google.com/calendar/b/0/embed?height=600&amp;wkst=1&amp;bgcolor=%23ffffff&amp;ctz=Africa%2FJohannesburg&amp;src=NHB2ZzA4ZWU4c25jbGZvMXJ0dmRhbDE2OG9AZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&amp;src=bTBrN3Y1Z3ZhcTc4b2Nwc2U3YTQxcGZibThAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&amp;src=bXRyajdjODI1cWVsY2M3M3BlYm5xcGcwY29AZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&amp;color=%235A9A08&amp;color=%231F753C&amp;color=%23D6AE00" style="border:solid 1px #777" width="100%" height="600" frameborder="0" scrolling="no")
-          
+      div Agenda of Your Upcoming Bookings
+        each doc in list
+          -var id = doc._id;
+            div
+              a(href="/edit/" + doc._id)
+                b= doc.tourDate
+                  span.small= ' - ' + doc.firstName + ' ' + doc.lastName
+              p= doc.address
+              p= doc.phone
+              p= doc.pax
+              p= doc.paidStatus
+              hr
+            

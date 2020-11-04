@@ -4,9 +4,15 @@ const mongoose = require('mongoose');
 const userController = require('../controllers/userController');
 
 
+router.get('/', (req, res, next) => {
+  res.render('login', {
+    viewTitle: 'WINE BOOK HELPER',
+  });
+});
+
 router.get('/signup', (req, res, next) => {
   res.render('signup', {
-    viewTitle: 'SignUp for Awesomeness!',
+    viewTitle: 'WTCT | REGISTER ',
   });
 });
 
@@ -14,13 +20,34 @@ router.post('/signup', userController.signup);
 
 router.get('/login', (req, res, next) => {
   res.render('login', {
-    viewTitle: 'Login to Happiness',
+    viewTitle: 'WTCT | DASHBOARD',
   });
+});
+
+router.get('/logout', (req, res, next) => {
+  req.session = null;
+  // console.log('session deleted')
+  res.redirect('/');
 });
 
 router.post('/login', userController.login );
 
+router.get('/dashboard', userController.allowIfLoggedin, userController.grantAccess('readAny', 'profile'), (req, res) => {
+  res.render('dashboard', {
+    viewTitle: 'Dashboard',
+
+  });
+});
+
+router.get('/add', userController.allowIfLoggedin, userController.grantAccess('readAny', 'profile'));
+
+router.get('/calendar', userController.allowIfLoggedin, userController.grantAccess('readAny', 'profile'));
+
+/* router.get('/add', userController.allowIfLoggedin, userController.grantAccess('readAny', 'profile'));
+ */
 router.get('/users', userController.allowIfLoggedin, userController.grantAccess('readAny', 'profile'), userController.getUsers);
+
+router.get('/list', userController.allowIfLoggedin, userController.grantAccess('readAny', 'profile'));
 
 router.get('/user/:userId', userController.allowIfLoggedin, userController.getUser);
 
@@ -47,13 +74,6 @@ runTasks.sendCustomerFeedback();
 // do this next https://wanago.io/2019/06/17/using-push-notifications-with-service-workers-and-node-js/
 console.log(taskNotificationMsg);
 
-router.get('/', (req, res, next) => {
-  res.render('index', {
-    viewTitle: 'Welcome to WINE BOOK HELPER',
-    taskNotificationMsg: 'taskNotificationMsg ran',
-
-  });
-});
 
 router.get('/add', (req, res, next) => {
   res.render('add', {
@@ -267,11 +287,11 @@ router.get('/list', (req, res) => {
   }).sort({tourDate: 'descending'});
 });
 
-router.get('/dashboard', (req, res) => {
+/* router.get('/dashboard', (req, res) => {
   res.render('dashboard', {
     viewTitle: 'Dashboard',
   });
-});
+}); */
 
 router.get('/edit/:id', (req, res) => {
   Booking.findById(req.params.id, (err, doc) => {
@@ -301,7 +321,7 @@ router.get('/search/:q', (req, res) => {
 
   console.log(result);
   Booking.find(result, (err, docs) => {
-    console.log(result);
+    // console.log(result);
     if (!err) {
       res.render('bookingsList', {
         viewTitle: 'Search Results',
@@ -315,125 +335,19 @@ router.get('/search/:q', (req, res) => {
 });
 
 router.get('/calendar', (req, res, next) => {
-  const fs = require('fs');
-  const readline = require('readline');
-  const {google} = require('googleapis');
-
-
-  // If modifying these scopes, delete token.json.
-  const SCOPES = ['https://www.googleapis.com/auth/calendar'];
-  // The file token.json stores the user's access and refresh tokens, and is
-  // created automatically when the authorization flow completes for the first
-  // time.
-  const TOKEN_PATH = 'token.json';
-
-  // Load client secrets from a local file.
-  fs.readFile('credentials.json', (err, content) => {
-    if (err) return console.log('Error loading client secret file:', err);
-    // Authorize a client with credentials, then call the Google Calendar API.
-    authorize(JSON.parse(content), listEvents);
-  });
-
-  /**
-   * Create an OAuth2 client with the given credentials, and then execute the
-   * given callback function.
-   * @param {Object} credentials The authorization client credentials.
-   * @param {function} callback The callback to call with the authorized client.
-   */
-  function authorize(credentials, callback) {
-    // eslint-disable-next-line camelcase
-    const {client_secret, client_id, redirect_uris} = credentials.installed;
-    const oAuth2Client = new google.auth.OAuth2(
-        client_id, client_secret, redirect_uris[0]);
-
-    // Check if we have previously stored a token.
-    fs.readFile(TOKEN_PATH, (err, token) => {
-      if (err) return getAccessToken(oAuth2Client, callback);
-      oAuth2Client.setCredentials(JSON.parse(token));
-      callback(oAuth2Client);
-    });
-  }
-
-  /**
-   * Get and store new token after prompting for user authorization, and then
-   * execute the given callback with the authorized OAuth2 client.
-   * @param {google.auth.OAuth2} oAuth2Client The OAuth2 client to get token for.
-   * @param {getEventsCallback} callback The callback for the authorized client.
-   */
-  function getAccessToken(oAuth2Client, callback) {
-    const authUrl = oAuth2Client.generateAuthUrl({
-      access_type: 'offline',
-      scope: SCOPES,
-    });
-    console.log('Authorize this app by visiting this url:', authUrl);
-    const rl = readline.createInterface({
-      input: process.stdin,
-      output: process.stdout,
-    });
-    rl.question('Enter the code from that page here: ', (code) => {
-      rl.close();
-
-
-      oAuth2Client.getToken(code, (err, token) => {
-        if (err) return console.error('Error retrieving access token', err);
-        oAuth2Client.setCredentials(token);
-        // Store the token to disk for later program executions
-        fs.writeFile(TOKEN_PATH, JSON.stringify(token), (err) => {
-          if (err) return console.error(err);
-          console.log('Token stored to', TOKEN_PATH);
-        });
-        callback(oAuth2Client);
+  // const result = {};
+  const docs = Booking.find({/* result */}, (err, docs) => {
+    if (!err) {
+      res.render('calendar', {
+        viewTitle: 'Agenda',
+        list: docs,
       });
-    });
-  }
-
-  const userProfile = req.user;
-  if (userProfile.emails[0].value == process.env.GC_USER_EMAIL) {
-    opCalendarLink = process.env.GOOGLE_CALENDAR_ID_GC;
-  } else if (userProfile.emails[0].value == process.env.NODEMAILER_WTCT_PRODUCTION) {
-    opCalendarLink = process.env.GOOGLE_CALENDAR_ID_GC + '&' + process.env.GOOGLE_CALENDAR_ID_AS + '&' + process.env.GOOGLE_CALENDAR_ID_AV + '&color=%23D6AE00&color=%3C995B08&color=%231F753C&showTitle=0';
-    /*     opCalendarLink = process.env.GOOGLE_CALENDAR_ID_GC + '&' + process.env.GOOGLE_CALENDAR_ID_AS + '&' + process.env.GOOGLE_CALENDAR_ID_AV + '&color=%23D6AE00&color=%3C995B08&color=%231F753C&showTitle=0';
- */} else if (userProfile.emails[0].value == process.env.AS_USER_EMAIL) {
-    opCalendarLink = process.env.GOOGLE_CALENDAR_ID_AS;
-  } else if (userProfile.emails[0].value == process.env.AV_USER_EMAIL) {
-    opCalendarLink = process.env.GOOGLE_CALENDAR_ID_AV;
-  }// else (opCalendarLink = process.env.GOOGLE_CALENDAR_ID_WTCT);
-
-  /**
-   * Lists the next 10 events on the user's primary calendar.
-   * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
-   */
-  async function listEvents(auth) {
-    const calendar = google.calendar({version: 'v3', auth});
-    calendar.events.list({
-      calendarId: 'primary',
-      timeMin: (new Date()).toISOString(),
-      maxResults: 10,
-      singleEvents: true,
-      orderBy: 'startTime',
-    }, (err, res) => {
-      if (err) return console.log('The list 10 events calendar API returned an error: ' + err);
-      events = res.data.items;
-      if (events.length) {
-        console.log('Upcoming 10 events:');
-        events.map((event, i) => {
-          const start = event.start.dateTime || event.start.date;
-          console.log(`${start} - ${event.summary}`);
-        });
-      } else {
-        console.log('No upcoming events found.');
-      }
-    });
-  }
-  // opCalendarLink = process.env.NODEMAILER_WTCT_PRODUCTION; // FOR STAGING PER OP CAL RENDERING
-  // switch calendar link depending on OP logged in
-
-  res.render('calendar', {
-    viewTitle: 'Booking Calendar',
-    eventList: events,
-    opCalendarLink: opCalendarLink,
-    userProfile: userProfile,
-  });
+      // console.log(docs);
+    } else {
+      console.log('Error  finding record :' + err);
+    }
+  }).sort({tourDate: 'descending'});
+  // console.log(result);
 });
 
 

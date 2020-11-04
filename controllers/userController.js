@@ -20,7 +20,7 @@ exports.grantAccess = function(action, resource) {
     try {
       const permission = roles.can(req.user.role)[action](resource);
       if (!permission.granted) {
-        return res.status(401).json({
+        return res.render('login', {
           error: 'You don\'t have enough permission to perform this action',
         });
       }
@@ -36,7 +36,7 @@ exports.allowIfLoggedin = async (req, res, next) => {
   try {
     const user = res.locals.loggedInUser;
     if (!user) {
-      return res.status(401).json({
+      return res.render('login', {
         error: 'You need to be logged in to access this route',
       });
     }
@@ -58,9 +58,10 @@ exports.signup = async (req, res, next) => {
     });
     newUser.accessToken = accessToken;
     await newUser.save();
-    res.send({
+    res.render('login', {
+      //viewTitle: 'Thanks! WTCT | REGISTER ',
       data: newUser,
-      message: 'You have signed up successfully',
+      msg: 'You signed up successfully! An admin will activate your account soon.',
     });
   } catch (error) {
     next(error);
@@ -82,14 +83,15 @@ exports.login = async (req, res, next) => {
 
     await User.findByIdAndUpdate(user._id, {accessToken});
     // res.header('authorization', 'Bearer ' + [accessToken]);
-    req.session._id = user._id;
+    req.session.id = user._id;
     req.session.email = user.email;
     req.session.role = user.role;
     req.session.accessToken = accessToken;
+    req.session.loggedInFor = Math.floor(Date.now() / 60e3);
 
-    res.status(200).json({
+
+    res.redirect('/dashboard', 301, {
       data: {email: user.email, role: user.role},
-      accessToken,
     });
   } catch (error) {
     next(error);
