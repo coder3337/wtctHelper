@@ -1,51 +1,60 @@
 div.header
-  div.userDetailsBar.p-2.text-right
-    i.fa.fa-user  
-    span  Hi #{name} (#{loggedInEmail})
+  div.userDetailsBar.py-2.text-right
+    i.fa.fa-user.px-1  
+    span Hi! 
+      a(href='/user/' + id)= email 
+      //-span= ' (' + data.role + ') account'
       span
-        a.btn.btn-primary.btn-sm.mx-2(href="/logout")
+        a.mx-2(href="/logout")
           i.fa.fa-sign-out
           span  Logout
     a.btn-sm.btn.btn-info(href='/list') Open Bookings 
       span.badge.badge-light #{count}
-  div.clearfix  
-  nav.navbar.navbar-expand-lg.navbar-dark
-    button.navbar-toggler.collapsed(
-      type='button' data-toggle='collapse'
-      data-target='#navbarToggler'
-      aria-controls='navbarToggler' 
-      aria-expanded='true' aria-label='Toggle navigation' )
-      span.navbar-toggler-icon
-    a.navbar-brand(href='/dashboard') 
-      img(src='/wtct-small-logo.png' width="204" height="85" class="d-inline-block align-top" alt="wtct logo")
-    div.collapse.navbar-collapse#navbarToggler
-      ul#navbar.navbar-nav.mr-4.mt-2.mt-lg-0
-        li.nav-item
-          a.nav-link(
-            href='/dashboard'
-            ) Dashboard 
-          //- span.sr-only current
-        li.nav-item  
-          a.nav-link(href="/add") Add New
-        li.nav-item  
-          a.nav-link(href="/list") View All
-        li.nav-item
-          a.nav-link(
-            href='/calendar'
-            ) Calendar
-        li.class.nav-item.dropdown
-          a.nav-link.dropdown-toggle(href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-          ) Tools
-          div.dropdown-menu(aria-labelledby="navbarDropdown")
-            a.dropdown-item(href="/user") User Details
-            a.dropdown-item(href="#") Search (use searchbox)  
-            a.dropdown-item.disabled(href='/logs') Logs
-            div.dropdown-divider
-            a.dropdown-item test
-      form.form-inline.my-2.my-lg-0#searchBox(
-        action='/search/' +   q
-        method='GET'
-        )
-          input.form-control.mr-sm-2(type='text', placeholder='Search by name or email', aria-label='Search', id='q' name='q' 
-                  )
-          button.btn.btn-success.my-2.my-sm-0(type='submit' id='submit' name="submit") Search    
+  div.clearfix   
+  div.container
+    nav.navbar.navbar-expand-lg.navbar-dark
+      div.row
+        div.col
+          button.small.navbar-toggler.collapsed(
+            type='button' data-toggle='collapse'
+            data-target='#navbarToggler'
+            aria-controls='navbarToggler' 
+            aria-expanded='true' aria-label='Toggle navigation' )
+            span.navbar-toggler-icon
+        div.col-6.float-right
+          a.navbar-brand(href='/dashboard') 
+            img(src='/wtct-small-logo.png' width="100%" height="auto" class="d-inline-block align-top" alt="wtct logo")
+        div.collapse.navbar-collapse#navbarToggler
+          ul#navbar.navbar-nav.mr-4.mt-2.mt-lg-0
+            li.nav-item
+              a.nav-link(
+                href='/dashboard'
+                ) Dashboard 
+              //- span.sr-only current
+            li.nav-item  
+              a.nav-link(href="/add") Add New
+            li.nav-item  
+              a.nav-link(href="/list") View All
+            li.nav-item
+              a.nav-link(
+                href='/calendar'
+                ) Agenda
+            li.class.nav-item.dropdown
+              a.nav-link.dropdown-toggle(href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+              ) Tools
+              div.dropdown-menu(aria-labelledby="navbarDropdown")
+                a.dropdown-item(href="/user/" + id) User Details
+                a.dropdown-item(href="/users") All Users
+                a.dropdown-item.disabled(href='/logs') lorem
+                div.dropdown-divider
+                a.dropdown-item lorem
+div.container
+  form.form-inline.my-2.my-lg-0#searchBox(
+    action='/search/' +   q
+    method='GET'
+    )
+      div.input-group
+        input.form-control(type='text', placeholder='Search by name or email', aria-label='Search', id='q' name='q' 
+                )
+        div.input-group-append
+          button.btn.btn-success(type='submit' id='submit' name="submit") Search

@@ -1,5 +1,7 @@
 extends head
 block content
+  block menu
+    include menu
   div.dashBoard
     div.container-fluid.bg-white.py-2
       div.view.dashBoardPage
@@ -22,8 +24,13 @@ block content
               div.card-body
                 //- h5.card-title #{userProfile}
                 //- p.card-text Name: #{name}
-                p.card-text Name: #{name}
-                p.card-text Logged in as: #{loggedInEmail}
+                p.card-text Logged in as: 
+                 span= email
+                p.card-text Account Type: 
+                  span= role
+                p= id
+                p= message
+                p= count + ' open bookings'
                 //- p.card-text publicGlobalToken: #{publicGlobalToken}
             div
               div.card.my-3 
@@ -36,35 +43,11 @@ block content
               div.card-header Messages, Notes / Major Changes
               div.card-body
                 div.card-text
+                  p.alert-danger.p-1= taskNotificationMsg
                   p.alert-warning.p-1 Calendar Page error: resolve by reloading page - in progress
                   p.alert-info.p-1 Working on CHD multiday tours
                   p.alert-warning.p-1 Remember to use STAGING email addresses when adding new customers or tour guides info.
                   p.alert-success.p-1 OP booking email updated to bookings@gocape.co.za
                   hr
                   //- p.alert-info Remote DB ref changed to DEV DB so no conflict.
-          div.col-md-4 
-            div.card.my-0 
-              div.card-header How do new bookings get processed?
-              div.card-body
-                div.card-text
-                  p The program takes care of all the heavy lifting after confirming a new booking and processing payment. Once confirmed log the booking here to put them in the que.
-                  hr
-                  p 1. Add a new booking 
-                  p 2. sends booking email to OP
-                  p 3. Calendar event gets created
-                  p 4. updates DB - event created on calendar
-                  p 5. updates DB - OP booking sent updated
-                  hr
-                  p 6. sends Client Reminders
-                  p 7. updates DB - client reminder sent
-                  hr
-                  p 8. sends OP reminders the day before 
-                  p 9. updates DB - OP reminded
-                  hr
-                  p 10. sends GC guides reminders the day before 
-                  p 11. updates DB - GC guides reminded
-                  hr
-                  p 12. send customer feedback to client
-                  p 13. update DB - feedback sent
-
 

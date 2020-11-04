@@ -11,14 +11,23 @@ module.exports = function() {
       try {
         docs = await Booking.find();
         const bookingsCount = docs.length;
-        const userProfile = req.user;
+        /* const userProfile = req.user;
+        const operator_email = req.user.opmail; */
 
+        console.log(req.user);
         res.locals = {
           count: bookingsCount,
-          userProfile: JSON.stringify(userProfile, null, 2),
-          name: userProfile.displayName,
+          // userProfile: JSON.stringify(userProfile, null, 2),
+          /* name: userProfile.displayName,
           loggedInEmail: userProfile.emails[0].value,
-          isAuthenticated: req.isAuthenticated(),
+          // isAuthenticated: req.isAuthenticated(),
+          profile: userProfile,
+          pic: userProfile.picture,
+          opmail: operator_email, */
+
+          // opmail: user_metadata.operator_email,
+
+
         };
 
         return next();
@@ -27,8 +36,6 @@ module.exports = function() {
         return next(err);
       }
     }
-    req.session.returnTo = req.originalUrl;
-    res.redirect('/login');
   };
 };
 

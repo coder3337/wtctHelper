@@ -23,15 +23,13 @@ html
     div.outerWrap
       div.container-fluid.bg-white.p-0
         header
-        if isAuthenticated
-          div#errormessages
-            //- p.alert.alert-success(role="alert") #{taskNotificationMsg}  
-          include menu
-          
-          main  
-            div.view
-              div.container-fluid
+        //-if isAuthenticated
+        div#errormessages
+          //- p.alert.alert-success(role="alert") #{taskNotificationMsg}  
+        main  
+          div.view
+            div.container-fluid
         block content
-        block footer  
-          div.text-white.p-2.small(style="background-color: #334a39")
-            div WTCT Helper app v.1.1 | Please report bugs in a snaglist
+          block footer  
+            div.text-white.p-2.small(style="background-color: #334a39")
+              div WTCT Helper app v.1.1

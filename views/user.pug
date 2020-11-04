@@ -2,6 +2,8 @@ extends head
 block variables
   - var test='test value'
 block content
+  block menu
+    include menu
   div.userPage
     div.container-fluid.bg-white.py-2
       div.view.userPage
@@ -10,15 +12,20 @@ block content
             h3 #{viewTitle}
           div.clearfix  
           div.userContentBlock
-            p name: #{name} 
-            p loggedInEmail: #{loggedInEmail} 
-            p Authed: #{isAuthenticated} 
-            p Profile Info: #{userProfile} 
-            p Meta: #{userProfile} 
-
+            p= 'Hi!' + data.message
+            //-p= data.user.id
+            p= 'Account Type:' + data.role
+            //-input(type='text' name='email' placeholder='email' value=`${user.email}`)
+            p= 'Email:' + data.email
+            //-img(src=`${pic}` alt='Profile Image')
+          //-form#addForm(action='/user' method='POST' autocomplete='on')
+            //-label Bookings Email
+            //-input.form-control(type='text' name='email' placeholder='Email' value=`${email}` )
+            //-button.btn.btn-sm.btn-secondary(type='submit'  href="/user" ) Update
             //- p publicGlobalToken: #{publicGlobalToken} 
             //-p Logged in as: #{test}  
             //-p Logged in as: #{userProfile.emails[0].value}  
+        //-p Profile Info: #{userProfile} 
         block footer
           
           p user footer

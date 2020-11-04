@@ -165,7 +165,7 @@ $(document).ready(function() {
   const button = document.querySelector('button#addNew');
   button.onclick = function() {
     const myItem = input.value;
-    input.value = '';
+    myItem = '';
     const listItem = document.createElement('li');
     const listText = document.createElement('span');
     const listBtn = document.createElement('button');
