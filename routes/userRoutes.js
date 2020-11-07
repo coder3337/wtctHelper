@@ -1,8 +1,21 @@
 const express = require('express');
 const router = express.Router();
-const mongoose = require('mongoose');
 const userController = require('../controllers/userController');
 
+// must export this
+const mongoose = require('mongoose');
+const Booking = mongoose.model('Booking');
+const dt = require('../public/dates.js');
+const runTasks = require('../tasks.js');
+
+console.log('Date tomorrow', dt.dateTomorrow());
+
+runTasks.sendNewBookings();
+runTasks.clientReminders();
+runTasks.reminderOperators();
+runTasks.remindGCGuides();
+runTasks.sendCustomerFeedback();
+// //
 
 router.get('/', (req, res, next) => {
   res.render('login', {
@@ -54,26 +67,6 @@ router.get('/user/:userId', userController.allowIfLoggedin, userController.getUs
 router.put('/user/:userId', userController.allowIfLoggedin, userController.grantAccess('updateAny', 'profile'), userController.updateUser);
 
 router.delete('/user/:userId', userController.allowIfLoggedin, userController.grantAccess('deleteAny', 'profile'), userController.deleteUser);
-
-
-const Booking = mongoose.model('Booking');
-const dt = require('../public/dates.js');
-const runTasks = require('../getMatches.js');
-
-const taskNotificationMsg = 'Task ran';
-
-console.log('Date tomorrow', dt.dateTomorrow());
-
-runTasks.sendNewBookings();
-runTasks.clientReminders();
-runTasks.reminderOperators();
-runTasks.remindGCGuides();
-runTasks.sendCustomerFeedback();
-// ////////////
-// working on notificaiotns
-// do this next https://wanago.io/2019/06/17/using-push-notifications-with-service-workers-and-node-js/
-console.log(taskNotificationMsg);
-
 
 router.get('/add', (req, res, next) => {
   res.render('add', {

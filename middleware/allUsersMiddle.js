@@ -14,8 +14,8 @@ module.exports = function() {
         count: bookingsCount,
         title: 'My App',
         publicGlobalToken: '1234',
-        taskNotificationMsg: 'Im a global msg ',
-        message: 'Im also a global msg',
+        infoMsg: 'Global info msg',
+        warnMsg: 'Global warning msg',
 
       };
       // console.log('locals:', res.locals);

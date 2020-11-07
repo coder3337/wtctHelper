@@ -13,7 +13,7 @@
     "start": "node ./bin/www",
     "debug": "set DEBUG=express:* & node ./bin/www",
     "dev": "nodemon -e * ./bin/www",
-    "ui": "browser-sync start --proxy localhost:8000 --files=**/*  --ignore=node_modules --reload-delay 1000 --no-ui --no-notify --no-inject-changes"
+    "ui": "browser-sync start --proxy localhost:8000 --files=**/*  --ignore=node_modules --reload-delay 3000 --no-ui --no-notify --no-inject-changes"
   },
   "keywords": [],
   "devDependencies": {
