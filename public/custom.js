@@ -123,8 +123,6 @@ function toggleField(hideObj, showObj) {
 
 // delete confirmation message
 $(document).ready(function() {
-  // confirmDelete(); // call this first so we start out with the correct visibility depending on the selected form values
-  // this will call our confirmDelete function every time the selection value of our other field changes
   $('#delete').click(function() {
     confirmDelete();
   });
@@ -164,7 +162,7 @@ $(document).ready(function() {
   const input = document.querySelector('input#item');
   const button = document.querySelector('button#addNew');
   button.onclick = function() {
-    const myItem = input.value;
+    let myItem = input.value;
     myItem = '';
     const listItem = document.createElement('li');
     const listText = document.createElement('span');

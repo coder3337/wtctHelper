@@ -153,7 +153,7 @@ block content
                   onchange="if(this.options[this.selectedIndex].value=='[custom amount]'){toggleField(this,this.nextSibling); this.selectedIndex='0';}"
                   )=`${booking.paidStatus}`
                   //- option(value='' selected='selected' hidden='hidden') Tour Type
-                  option(value='' selected='selected' hidden='hidden') #{booking.paidStatus}
+                  option(value=`${booking.paidStatus}` selected='selected' hidden='hidden') #{booking.paidStatus}
                   option.value='0%'
                   option.value='50%'
                   option.value='100%'
@@ -165,9 +165,8 @@ block content
                 textarea.form-control(
                   type='textarea'
                   name='notes'
-                  placeholder='notes' 
-                  value= `${booking.notes}`
-                  )
+                  value=`${booking.notes}`
+                  )=`${booking.notes}`
                 div.text-danger #{booking.notesError}
               div.form-group.col-md-3#referrer
                 label Referrered By
@@ -175,9 +174,9 @@ block content
                   type='text'
                   name='referrer'
                   placeholder='Referrer' 
-                  value= `${booking.referrer}`
+                  value=`${booking.referrer}`
                   )
-              div.text-danger #{booking.referrerError}
+                div.text-danger #{booking.referrerError}
             div.form-row
               div.form-row.col-md-10
                 div.col-md-3

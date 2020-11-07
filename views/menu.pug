@@ -1,31 +1,32 @@
 div.header
+  div.alert-danger.text-center.p-1.small= infoMsg
+  div.alert-info.text-center.p-1.small= warnMsg
   div.userDetailsBar.py-2.text-right
-    i.fa.fa-user.px-1  
-    span Hi! 
-      a(href='/user/' + id)= email 
-      //-span= ' (' + data.role + ') account'
-      span
-        a.mx-2(href="/logout")
-          i.fa.fa-sign-out
-          span  Logout
-    a.btn-sm.btn.btn-info(href='/list') Open Bookings 
-      span.badge.badge-light #{count}
-  div.clearfix   
-  div.container
-    nav.navbar.navbar-expand-lg.navbar-dark
-      div.row
-        div.col
+    div.container
+      i.fa.fa-user.px-1  
+      span Hi! 
+        a(href='/user/' + id)= email 
+        //-span= ' (' + data.role + ') account'
+        span
+          a.mx-2(href="/logout")
+            i.fa.fa-sign-out
+            span  Logout
+    div.clearfix   
+  div.navBar
+    div.container
+      nav.navbar.navbar-expand-lg.navbar-dark
+        div
           button.small.navbar-toggler.collapsed(
             type='button' data-toggle='collapse'
             data-target='#navbarToggler'
             aria-controls='navbarToggler' 
             aria-expanded='true' aria-label='Toggle navigation' )
             span.navbar-toggler-icon
-        div.col-6.float-right
+        div.float-right
           a.navbar-brand(href='/dashboard') 
-            img(src='/wtct-small-logo.png' width="100%" height="auto" class="d-inline-block align-top" alt="wtct logo")
+            img(src='/wtct-small-logo.png' width="80%" height="auto" class="float-right" alt="wtct logo")
         div.collapse.navbar-collapse#navbarToggler
-          ul#navbar.navbar-nav.mr-4.mt-2.mt-lg-0
+          ul#navbar.navbar-nav
             li.nav-item
               a.nav-link(
                 href='/dashboard'
@@ -33,12 +34,13 @@ div.header
               //- span.sr-only current
             li.nav-item  
               a.nav-link(href="/add") Add New
-            li.nav-item  
-              a.nav-link(href="/list") View All
             li.nav-item
               a.nav-link(
                 href='/calendar'
                 ) Agenda
+            li.nav-item  
+              a.nav-link(href="/list") View All 
+                span.badge.badge-light #{count}
             li.class.nav-item.dropdown
               a.nav-link.dropdown-toggle(href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
               ) Tools
@@ -48,13 +50,18 @@ div.header
                 a.dropdown-item.disabled(href='/logs') lorem
                 div.dropdown-divider
                 a.dropdown-item lorem
+
 div.container
-  form.form-inline.my-2.my-lg-0#searchBox(
-    action='/search/' +   q
-    method='GET'
-    )
-      div.input-group
-        input.form-control(type='text', placeholder='Search by name or email', aria-label='Search', id='q' name='q' 
-                )
-        div.input-group-append
-          button.btn.btn-success(type='submit' id='submit' name="submit") Search
+  div.d-flex
+    form.form-inline.my-2.my-lg-0#searchBox(
+      action='/search/' +   q
+      method='GET'
+      )
+        div.input-group
+          input.form-control(type='text', placeholder='Search by name or email', aria-label='Search', id='q' name='q' 
+                  )
+          div.input-group-append
+            button.btn.btn-success(type='submit' id='submit' name="submit") Find
+          div.input-group-append 
+            a.btn.btn.btn-secondary(href="/add") 
+              span  Add New 
