@@ -22,7 +22,7 @@ block content
             span Delete 
             span.deleteCounter.badge.badge-light
       p.small Best viewed on a desktop
-      unless list
+      if list.length
         div.d-flex
           div.bg-white.py-2
             div.small.d-flex.justify-content-between
@@ -42,71 +42,69 @@ block content
               div
               div Booked
               div Referrer
-          each doc in list
-            -var id = doc._id;
-            -var days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-            -var d = new Date (doc.tourDate)
-            -let dayName = days[d.getDay()];
-            if dayName == 'Sun' 
-              -var dayColor='Blue'
-            if dayName == 'Mon' 
-              -var dayColor='Coral'
-            if dayName == 'Tue' 
-              -var dayColor='Crimson'
-            if dayName == 'Wed' 
-              -var dayColor='DarkOrchid'
-            if dayName == 'Thu' 
-              -var dayColor='LimeGreen'
-            if dayName == 'Fri' 
-              -var dayColor='DeepSkyBlue'
-            if dayName == 'Sat' 
-              -var dayColor='OliveDrab'
-            div.mt-3.pl-3(style='border-left: solid ' + dayColor +  ' 5px;')
-              div
-                form#bookingsToDelete(
-                  action='/list/batchDelete'
-                  method='POST'
-                  autocomplete='off'
-                  )
-                div#allList.d-flex.justify-content-between
-                  div
-                    input.form-control(type='checkbox' name='ids[]' id='doc._id' value=doc._id onclick='return selectedForDelete();' ) 
-                  div
-                    span.h2.badge.badge-success.mr-2.text-white()= dayName 
-                      div
-                        span.small()= doc.tourDate 
-                  div.small
-                    a(href="/edit/" + doc._id)
-                      b= doc.firstName + ' ' + doc.lastName
-                  div.small
-                    a(data-toggle="popover" title="Pickup Address" data-content= doc.pickupAddress
-                    ) 
-                      u View
-                  div.small
-                    span.h3.badge.badge-success.text-white.ml-2.align-self-center=  'x ' + doc.pax
-                  div.small= doc.paidStatus
-                  div.small= doc.phone
-                  div.small= doc.customerEmail
-                  div.small= doc.operatorName
-                  div.small= doc.tourType
-                  div.small
-                    a(data-toggle="popover" title="Guide Details" data-html="true" data-content= doc.guidesName + 'br( ' + doc.guidesEmail
+            each doc in list
+              -var id = doc._id;
+              -var days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+              -var d = new Date (doc.tourDate)
+              -let dayName = days[d.getDay()];
+              if dayName == 'Sun' 
+                -var dayColor='Blue'
+              if dayName == 'Mon' 
+                -var dayColor='Coral'
+              if dayName == 'Tue' 
+                -var dayColor='Crimson'
+              if dayName == 'Wed' 
+                -var dayColor='DarkOrchid'
+              if dayName == 'Thu' 
+                -var dayColor='LimeGreen'
+              if dayName == 'Fri' 
+                -var dayColor='DeepSkyBlue'
+              if dayName == 'Sat' 
+                -var dayColor='OliveDrab'
+              div.mt-3.pl-3(style='border-left: solid ' + dayColor +  ' 5px;')
+                div
+                  form#bookingsToDelete(
+                    action='/list/batchDelete'
+                    method='POST'
+                    autocomplete='off'
+                    )
+                  div#allList.d-flex.justify-content-between
+                    div
+                      input.form-control(type='checkbox' name='ids[]' id='doc._id' value=doc._id onclick='return selectedForDelete();' ) 
+                    div
+                      span.h2.badge.badge-success.mr-2.text-white()= dayName 
+                        div
+                          span.small()= doc.tourDate 
+                    div.small
+                      a(href="/edit/" + doc._id)
+                        b= doc.firstName + ' ' + doc.lastName
+                    div.small
+                      a(data-toggle="popover" title="Pickup Address" data-content= doc.pickupAddress
                       ) 
                         u View
-                  div.small
-                    a(data-toggle="popover" title="Notes" data-html="true" data-content= doc.notes
-                      ) 
-                        u View
-                  div
-                    a.btn.btn-outline-info.btn-sm(href="/edit/" + doc._id)
-                      i.fa.fa-pencil.fa-xs(
-                      aria-hidden=true data-toggle="tooltip" data-placement="top" title="Edit booking"
-                      )
-                  div
-                    a.btn.btn-outline-danger.btn-sm( href="/delete/" + doc._id onclick="return confirmDelete()")
-                      i.fa.fa-trash.fa-xs(aria-hidden=true data-toggle="tooltip" data-placement="top" title="Delete booking")
-                  div.small= doc.dateBooked
-                  div.small= doc.referrer
-              hr
-
-          
+                    div.small
+                      span.h3.badge.badge-success.text-white.ml-2.align-self-center=  'x ' + doc.pax
+                    div.small= doc.paidStatus
+                    div.small= doc.phone
+                    div.small= doc.customerEmail
+                    div.small= doc.operatorName
+                    div.small= doc.tourType
+                    div.small
+                      a(data-toggle="popover" title="Guide Details" data-html="true" data-content= doc.guidesName + 'br( ' + doc.guidesEmail
+                        ) 
+                          u View
+                    div.small
+                      a(data-toggle="popover" title="Notes" data-html="true" data-content= doc.notes
+                        ) 
+                          u View
+                    div
+                      a.btn.btn-outline-info.btn-sm(href="/edit/" + doc._id)
+                        i.fa.fa-pencil.fa-xs(
+                        aria-hidden=true data-toggle="tooltip" data-placement="top" title="Edit booking"
+                        )
+                    div
+                      a.btn.btn-outline-danger.btn-sm( href="/delete/" + doc._id onclick="return confirmDelete()")
+                        i.fa.fa-trash.fa-xs(aria-hidden=true data-toggle="tooltip" data-placement="top" title="Delete booking")
+                    div.small= doc.dateBooked
+                    div.small= doc.referrer
+                hr

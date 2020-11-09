@@ -74,9 +74,10 @@ div.container
                   )
           div.input-group-append
             button.btn.btn-secondary(type='submit' id='submit' name="submit") Find
-          div.input-group-append 
-            a.btn.btn.btn-light(href="/add") 
-              span  Add New 
+          if admin
+            div.input-group-append 
+              a.btn.btn.btn-light(href="/add") 
+                span  Add New 
 
   if warnMsg
     div.alert-danger.text-center.p-1.small= warnMsg
