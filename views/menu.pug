@@ -36,22 +36,31 @@ div.header
               //- span.sr-only current
             li.nav-item  
               a.nav-link(href="/add") Add
-            li.nav-item
-              a.nav-link(
-                href='/calendar'
-                ) Agenda
-            li.nav-item  
-              a.nav-link(href="/list") View All 
-                span.badge.badge-light #{count}
+            if role == 'basic'
+              li.nav-item
+                a.nav-link(
+                  href='/my-agenda'
+                  ) My Agenda
             if role == 'admin'
+              li.nav-item
+                a.nav-link(
+                  href='/agenda'
+                  ) Agenda
+            if role == 'basic'
+              li.nav-item  
+                a.nav-link(href="/my-bookings") My Bookings
+            if role == 'admin'
+              li.nav-item  
+                a.nav-link(href="/list") View All 
+                  span.badge.badge-light #{count}
               li.class.nav-item.dropdown
                 a.nav-link.dropdown-toggle(href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                 ) Tools
-              div.dropdown-menu(aria-labelledby="navbarDropdown")
-                a.dropdown-item(href="/user/" + id) User Details
-                div.dropdown-divider
-                a.dropdown-item(href="/users") Admins: All Users
-                //-a.dropdown-item.disabled(href='/logs') lorem
+                div.dropdown-menu(aria-labelledby="navbarDropdown")
+                  a.dropdown-item(href="/user/" + id) User Details
+                  div.dropdown-divider
+                  a.dropdown-item(href="/users") Admins: All Users
+                  //-a.dropdown-item.disabled(href='/logs') lorem
 
 div.container
   div.d-flex

@@ -54,13 +54,17 @@ router.get('/dashboard', userController.allowIfLoggedin, userController.grantAcc
 
 router.get('/add', userController.allowIfLoggedin, userController.grantAccess('readAny', 'profile'));
 
-router.get('/calendar', userController.allowIfLoggedin, userController.grantAccess('readAny', 'profile'));
+router.get('/agenda', userController.allowIfLoggedin, userController.grantAccess('readAny', 'profile'));
 
 /* router.get('/add', userController.allowIfLoggedin, userController.grantAccess('readAny', 'profile'));
  */
 router.get('/users', userController.allowIfLoggedin, userController.grantAccess('readAny', 'profile'), userController.getUsers);
 
 router.get('/list', userController.allowIfLoggedin, userController.grantAccess('readAny', 'profile'), userController.getAllBookings);
+
+router.get('/my-bookings', userController.allowIfLoggedin, userController.grantAccess('readOwn', 'profile'), userController.getMyBookings);
+
+router.get('/my-agenda', userController.allowIfLoggedin, userController.grantAccess('readOwn', 'profile'), userController.getMyAgenda);
 
 router.get('/user/:userId', userController.allowIfLoggedin, userController.getUser);
 
@@ -318,11 +322,11 @@ router.get('/search/:q', (req, res) => {
   }).sort({tourDate: 'descending'});
 });
 
-router.get('/calendar', (req, res, next) => {
+router.get('/agenda', (req, res, next) => {
   // const result = {};
   const docs = Booking.find({/* result */}, (err, docs) => {
     if (!err) {
-      res.render('calendar', {
+      res.render('agenda', {
         viewTitle: 'Agenda',
         list: docs,
       });

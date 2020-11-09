@@ -129,7 +129,7 @@ exports.add = async (req, res, next) => {
   }
 };
 
-// get all users
+// get all bookings // ADMINS ONLY
 exports.getAllBookings = async (req, res, next) => {
   try {
     await Booking.find((err, docs) => {
@@ -137,6 +137,54 @@ exports.getAllBookings = async (req, res, next) => {
 
       if (!err) {
         res.render('bookingsList', {
+          viewTitle: 'All Bookings',
+          list: docs,
+        });
+      } else {
+        console.log('Error in retrieving bookings list :' + err);
+      }
+    }).sort({tourDate: 'descending'});
+  } catch (error) {
+    next(error);
+  }
+/*   const users = await User.find({});
+  res.status(200).json({
+    data: users,
+  }); */
+};
+
+
+// get MY bookings - all users
+exports.getMyBookings = async (req, res, next) => {
+  try {
+    await Booking.find({operatorName: 'AS'}, (err, docs) => {
+      // if (!allBookings) return next(new Error('Nothing Found..'));
+
+      if (!err) {
+        res.render('bookingsList', {
+          viewTitle: 'All Bookings',
+          list: docs,
+        });
+      } else {
+        console.log('Error in retrieving bookings list :' + err);
+      }
+    }).sort({tourDate: 'descending'});
+  } catch (error) {
+    next(error);
+  }
+/*   const users = await User.find({});
+  res.status(200).json({
+    data: users,
+  }); */
+};
+// get MY bookings - all users
+exports.getMyAgenda = async (req, res, next) => {
+  try {
+    await Booking.find({operatorName: 'AS'}, (err, docs) => {
+      // if (!allBookings) return next(new Error('Nothing Found..'));
+
+      if (!err) {
+        res.render('agenda', {
           viewTitle: 'All Bookings',
           list: docs,
         });
