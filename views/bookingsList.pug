@@ -11,16 +11,6 @@ block content
             p.alert.alert-danger(role="alert") #{saveUnsuccessful}
           else if saveSuccessful
             p.alert.alert-success(role="alert") #{saveSuccessful}
-        div.p-2.actionMenu-2
-          a(href="/add")
-            button.btn.btn-success
-              //-i.fa.fa-plus-square(aria-hidden=true)
-              span  Add
-        if role == 'admin'
-          div.p-2.actionMenu-2
-            button#delete.btn.btn-danger(type='submit' form='bookingsToDelete' value='Submit' onclick="return confirmDelete()")
-              span Delete 
-              span.deleteCounter.badge.badge-light
       p.small Best viewed on a desktop or go to agenda view for a more mobile friendly view.
       form#bookingsToDelete(action='/list/batchDelete' method='POST' autocomplete='off')  
         if list.length

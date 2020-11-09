@@ -703,3 +703,4 @@ heroku-config.py
 credentials.json
 node_modules
 .idea/
+views/backup views/

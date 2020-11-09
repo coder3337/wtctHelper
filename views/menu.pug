@@ -3,10 +3,10 @@ div.header
     div.alert-info.text-center.p-1.small= siteMsg
   if infoMsg
     div.alert-info.text-center.p-1.small= infoMsg
-  div.userDetailsBar.py-2.text-right
-    div.container
+  div.userDetailsBar.py-1.text-right
+    div.container.small
       i.fa.fa-user.px-1  
-      span Hi! 
+      span Hi, 
         a(href='/user/' + id)= email 
         //-span= ' (' + data.role + ') account'
         span
@@ -24,9 +24,9 @@ div.header
             aria-controls='navbarToggler' 
             aria-expanded='true' aria-label='Toggle navigation' )
             span.navbar-toggler-icon
-        div.float-right
+        div.text-right
           a.navbar-brand(href='/dashboard') 
-            img(src='/wtct-small-logo.png' width="80%" height="auto" class="float-right" alt="wtct logo")
+            img(src='/wtct-small-logo.png' width="40%" height="auto" class="" alt="wtct logo")
         div.collapse.navbar-collapse#navbarToggler
           ul#navbar.navbar-nav
             li.nav-item
@@ -63,8 +63,8 @@ div.header
                   //-a.dropdown-item.disabled(href='/logs') lorem
 
 div.container
-  div.d-flex
-    form.form-inline.my-2#searchBox(
+  div
+    form.my-2#searchBox(
       action='/search/' +  q
       method='GET'
       )
@@ -74,9 +74,12 @@ div.container
           div.input-group-append
             button.btn.btn-secondary(type='submit' id='submit' name="submit") Find
           if role == 'admin'
-            div.input-group-append 
-              a.btn.btn.btn-light(href="/add") 
+            div.input-group-append.px-1
+              a.btn.btn.btn-success(href="/add") 
                 span  Add New 
-
+            div.input-group-append
+              button#delete.btn.btn-danger(type='submit' form='bookingsToDelete' value='Submit' onclick="return confirmDelete()")
+                span Delete 
+                span.deleteCounter.badge.badge-light
   if warnMsg
     div.alert-danger.text-center.p-1.small= warnMsg

@@ -19,7 +19,6 @@ const debug = require('debug')('wtcthelperapp:server');
 const User = require('./model/userModel');
 const userRoutes = require('./routes/userRoutes.js');
 const userInViews = require('./middleware/allUsersMiddle');
-// const allRoutes = require('./routes/allRoutes');
 const app = express();
 
 app.set('trust proxy', 1); // trust first proxy

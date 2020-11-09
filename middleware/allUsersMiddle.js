@@ -12,7 +12,7 @@ module.exports = function() {
       // res.locals - An object that contains response local variables scoped to the request, and therefore available only to the view(s) rendered during that request / response cycle (if any).
       res.locals = {
         count: bookingsCount,
-        infoMsg: 'Login sessions end automatically after 1 hour.',
+        infoMsg: '',
         siteMsg: '', // if broadcast is needed
         // warnMsg: '', // add a msg here for all users warning msg
 
