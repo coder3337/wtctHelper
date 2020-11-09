@@ -43,9 +43,10 @@ div.header
             li.nav-item  
               a.nav-link(href="/list") View All 
                 span.badge.badge-light #{count}
-            li.class.nav-item.dropdown
-              a.nav-link.dropdown-toggle(href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-              ) Tools
+            if role == 'admin'
+              li.class.nav-item.dropdown
+                a.nav-link.dropdown-toggle(href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                ) Tools
               div.dropdown-menu(aria-labelledby="navbarDropdown")
                 a.dropdown-item(href="/user/" + id) User Details
                 div.dropdown-divider

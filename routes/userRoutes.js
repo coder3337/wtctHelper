@@ -45,7 +45,7 @@ router.get('/logout', (req, res, next) => {
 
 router.post('/login', userController.login );
 
-router.get('/dashboard', userController.allowIfLoggedin, userController.grantAccess('readAny', 'profile'), (req, res) => {
+router.get('/dashboard', userController.allowIfLoggedin, userController.grantAccess('readOwn', 'profile'), (req, res) => {
   res.render('dashboard', {
     viewTitle: 'Dashboard',
 
@@ -60,7 +60,7 @@ router.get('/calendar', userController.allowIfLoggedin, userController.grantAcce
  */
 router.get('/users', userController.allowIfLoggedin, userController.grantAccess('readAny', 'profile'), userController.getUsers);
 
-router.get('/list', userController.allowIfLoggedin, userController.grantAccess('readAny', 'profile'));
+router.get('/list', userController.allowIfLoggedin, userController.grantAccess('readAny', 'profile'), userController.getAllBookings);
 
 router.get('/user/:userId', userController.allowIfLoggedin, userController.getUser);
 
@@ -267,18 +267,9 @@ router.post('/list/batchDelete', async (req, res) => {
   );
 });
 
-router.get('/list', (req, res) => {
-  Booking.find((err, docs) => {
-    if (!err) {
-      res.render('bookingsList', {
-        viewTitle: 'All Bookings',
-        list: docs,
-      });
-    } else {
-      console.log('Error in retrieving bookings list :' + err);
-    }
-  }).sort({tourDate: 'descending'});
-});
+/* router.get('/list', (req, res) => {
+
+}); */
 
 /* router.get('/dashboard', (req, res) => {
   res.render('dashboard', {

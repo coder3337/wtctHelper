@@ -1,5 +1,6 @@
 // server/controllers/userController.js
 
+const Booking = require('../model/booking.model');
 const User = require('../model/userModel');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
@@ -59,7 +60,7 @@ exports.signup = async (req, res, next) => {
     newUser.accessToken = accessToken;
     await newUser.save();
     res.render('login', {
-      //viewTitle: 'Thanks! WTCT | REGISTER ',
+      // viewTitle: 'Thanks! WTCT | REGISTER ',
       data: newUser,
       msg: 'You signed up successfully! An admin will activate your account soon.',
     });
@@ -98,26 +99,6 @@ exports.login = async (req, res, next) => {
   }
 };
 
-// res.locals.loggedInUser = accessToken;
-// add token to req.session
-// req.session.token = {'authorization': 'Bearer' + accessToken};
-
-// Update views
-// req.session.accessToken = accessToken;
-
-// Write response
-// res.end(req.session.views + ' views');
-
-//    req.session.accessToken = accessToken;
-// Set a new cookie with the name
-
-// res.header('Access-Control-Expose-Headers', 'authorization');
-// have a cookie if needed
-/* res.cookie('x-access-token', accessToken, {
-  expires: new Date(Date.now() + 8 * 3600000), // cookie will be removed after 8 hours
-}); */
-/* {httpOnly: true, secure: true, signed: true} */
-
 // get one user
 exports.getUser = async (req, res, next) => {
   try {
@@ -147,6 +128,31 @@ exports.add = async (req, res, next) => {
     next(error);
   }
 };
+
+// get all users
+exports.getAllBookings = async (req, res, next) => {
+  try {
+    await Booking.find((err, docs) => {
+      // if (!allBookings) return next(new Error('Nothing Found..'));
+
+      if (!err) {
+        res.render('bookingsList', {
+          viewTitle: 'All Bookings',
+          list: docs,
+        });
+      } else {
+        console.log('Error in retrieving bookings list :' + err);
+      }
+    }).sort({tourDate: 'descending'});
+  } catch (error) {
+    next(error);
+  }
+/*   const users = await User.find({});
+  res.status(200).json({
+    data: users,
+  }); */
+};
+
 
 // get all users
 exports.getUsers = async (req, res, next) => {
