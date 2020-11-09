@@ -13,7 +13,8 @@ module.exports = function() {
       res.locals = {
         count: bookingsCount,
         infoMsg: 'Login sessions end automatically after 1 hour.',
-        warnMsg: '', // add a msg here for all users warning msg
+        siteMsg: '', // if broadcast is needed
+        //warnMsg: '', // add a msg here for all users warning msg
 
       };
       // console.log('locals:', res.locals);

@@ -22,25 +22,26 @@ block content
             span Delete 
             span.deleteCounter.badge.badge-light
       p.small Best viewed on a desktop
-      div.d-flex
-        div.bg-white.py-2
-          div.small.d-flex.justify-content-between
-            div 
-            div Tour Date
-            div Name
-            div Pick Up
-            div Pax
-            div Paid
-            div Phone
-            div Email
-            div OP
-            div Type
-            div Guide
-            div Notes
-            div
-            div
-            div Booked
-            div Referrer
+      unless list
+        div.d-flex
+          div.bg-white.py-2
+            div.small.d-flex.justify-content-between
+              div 
+              div Tour Date
+              div Name
+              div Pick Up
+              div Pax
+              div Paid
+              div Phone
+              div Email
+              div OP
+              div Type
+              div Guide
+              div Notes
+              div
+              div
+              div Booked
+              div Referrer
           each doc in list
             -var id = doc._id;
             -var days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];

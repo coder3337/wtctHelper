@@ -156,17 +156,33 @@ exports.getAllBookings = async (req, res, next) => {
 
 // get MY bookings - all users
 exports.getMyBookings = async (req, res, next) => {
+  const email = req.session.email;
+  // console.log('email', email);
+  if (email == 'gc@sensison.com') {
+    OPinDB = 'GC';
+  }
+  if (email == 'as@sensison.com') {
+    OPinDB = 'AS';
+  }
+  if (email == 'av@sensison.com') {
+    OPinDB = 'AV';
+    // console.log('OPinDB', OPinDB);
+  }
   try {
-    await Booking.find({operatorName: 'AS'}, (err, docs) => {
-      // if (!allBookings) return next(new Error('Nothing Found..'));
+    await Booking.find({operatorName: OPinDB}, (err, docs) => {
+    // await Booking.find({operatorName: 'AS'}, (err, docs) => {
 
-      if (!err) {
+      if (docs.length == 0 ) {
         res.render('bookingsList', {
-          viewTitle: 'All Bookings',
+          viewTitle: 'My Bookings',
           list: docs,
+          warnMsg: 'You haven\'t added any bookings yet!',
         });
       } else {
-        console.log('Error in retrieving bookings list :' + err);
+        res.render('bookingsList', {
+          viewTitle: 'My Bookings',
+          list: docs,
+        });
       }
     }).sort({tourDate: 'descending'});
   } catch (error) {
@@ -179,28 +195,39 @@ exports.getMyBookings = async (req, res, next) => {
 };
 // get MY bookings - all users
 exports.getMyAgenda = async (req, res, next) => {
+  const email = req.session.email;
+  // console.log('email', email);
+  if (email == 'gc@sensison.com') {
+    OPinDB = 'GC';
+  }
+  if (email == 'as@sensison.com') {
+    OPinDB = 'AS';
+  }
+  if (email == 'av@sensison.com') {
+    OPinDB = 'AV';
+    // console.log('OPinDB', OPinDB);
+  }
   try {
-    await Booking.find({operatorName: 'AS'}, (err, docs) => {
-      // if (!allBookings) return next(new Error('Nothing Found..'));
+    await Booking.find({operatorName: OPinDB}, (err, docs) => {
+      // await Booking.find({operatorName: 'AS'}, (err, docs) => {
 
-      if (!err) {
-        res.render('agenda', {
-          viewTitle: 'All Bookings',
+      if (docs.length == 0) {
+        res.render('bookingsList', {
+          viewTitle: 'My Agenda',
           list: docs,
+          warnMsg: 'You haven\'t added any bookings yet!',
         });
       } else {
-        console.log('Error in retrieving bookings list :' + err);
+        res.render('agenda', {
+          viewTitle: 'My Agenda',
+          list: docs,
+        });
       }
     }).sort({tourDate: 'descending'});
   } catch (error) {
     next(error);
   }
-/*   const users = await User.find({});
-  res.status(200).json({
-    data: users,
-  }); */
 };
-
 
 // get all users
 exports.getUsers = async (req, res, next) => {
