@@ -52,7 +52,10 @@ h1, h2, h3 {
 h1 {
   font-size: 40px;
 }
-h4{ font-size: 1.2em;}
+
+h4 {
+  font-size: 1.2em;
+}
 
 /* a:link, a:active, a:visited {
   color: #1e7e34;
@@ -303,4 +306,8 @@ div.userDetailsBar {
   height: 24px;
   position: relative;
   top: -30px
+}
+
+#allList>div {
+  padding: 0 0.25em;
 }

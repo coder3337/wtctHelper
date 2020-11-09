@@ -5,7 +5,7 @@ block content
   block menu
     include menu
   div.addBooking
-    div.container-fluid.bg-white.py-2 
+    div.container.py-2 
       div.row.view.addView
         div.col-md-12.offset-md-0
           h3 #{viewTitle}
@@ -196,11 +196,11 @@ block content
                 div.text-danger #{booking.referrerError}
             div.form-row
               div.form-row.col-md-10
-                div.col-md-3
+                div.col
                   button.btn.btn-block.btn-primary(type='submit' href="/add/" + booking._id ) 
                     i.fa.fa-plus-square(aria-hidden=true)
                     span  Save  
-                div.col-md-2
+                div.col
                   //-button.btn.btn-block.btn-outline-info(type='reset' ) 
                     i.fa.fa-refresh(aria-hidden=true)  Reset  
                   a.btn.btn-block.btn-outline-info(href="/list")  

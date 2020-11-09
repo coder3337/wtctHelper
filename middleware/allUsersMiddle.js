@@ -12,10 +12,8 @@ module.exports = function() {
       // res.locals - An object that contains response local variables scoped to the request, and therefore available only to the view(s) rendered during that request / response cycle (if any).
       res.locals = {
         count: bookingsCount,
-        title: 'My App',
-        publicGlobalToken: '1234',
-        infoMsg: 'Global info msg',
-        warnMsg: 'Global warning msg',
+        infoMsg: 'Login sessions end automatically after 1 hour.',
+        warnMsg: '', // add a msg here for all users warning msg
 
       };
       // console.log('locals:', res.locals);

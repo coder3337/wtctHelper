@@ -1,3 +1,21 @@
+// show password toggler
+function myFunction() {
+  const x = document.getElementById('pwd');
+  if (x.type === 'password') {
+    x.type = 'text';
+  } else {
+    x.type = 'password';
+  }
+}
+
+$(document).on('click', '.toggle-password', function() {
+  $(this).toggleClass('fa-eye fa-eye-slash');
+
+  const input = $('#pwd');
+    input.attr('type') === 'password' ? input.attr('type', 'text') : input.attr('type', 'password');
+});
+
+
 // nav active class
 $(function() {
   const current = location.pathname;

@@ -125,7 +125,7 @@ exports.getUser = async (req, res, next) => {
     const user = await User.findById(userId);
     if (!user) return next(new Error('User does not exist'));
     // console.log(req.params);
-    res.send(200).json({
+    res.status(200).json({
       data: user,
     });
   } catch (error) {

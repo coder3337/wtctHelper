@@ -2,21 +2,34 @@ extends head
 block variables
   - var test='test value'
 block content
-  div.welcomeMessage.rounded
+  div.welcomeMessage
     div.userPage
       div.container-sm.bg-white.py-2
-        div.view.userPage
+        div.userPage
           div.flex-container
             div.text-center 
               h3 #{viewTitle}
             div.clearfix  
+            if msg
+              p.alert-success #{msg}
+            if error
+              p.alert-danger #{error}
             div.userContentBlock
               //-p 
                 img(src=`${pic}` alt='Profile Image')
             form#addForm.text-center(action='/signup' method='POST' autocomplete='on')
-              //-label Email
-              input.form-control.mb-2(type='text' name='email' placeholder='Email to send new bookings to..' value='' required autofocus)
-              //-label Password
-              input.form-control.mb-2(label='Password' type='text' name='password' placeholder='Password - make it secure!' value='' autocomplete='off' required )
+              div.input-group.mb-2
+                div.input-group-prepend
+                  div.input-group-text 
+                    i.fas.fa-envelope
+                input.form-control(type='text' name='email' placeholder='Email to send new bookings to..' value='' required autofocus)
+              div.input-group.mb-2
+                div.input-group-prepend
+                  div.input-group-text 
+                    i.fas.fa-lock
+                input.form-control(id='pwd' label='Password' type='password' name='password' placeholder='Password - make it secure!' value='' autocomplete='off' required )
+                div.input-group-append
+                  div.input-group-text 
+                    i(toggle="#password-field" class="fa fa-eye-slash field_icon toggle-password")
               div#loginButton
                 button.align-self-center.btn.btn-lg.btn-success.mb-1(type='submit' ) SIGN UP
