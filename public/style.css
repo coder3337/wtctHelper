@@ -1,5 +1,5 @@
-@import url("https://fonts.googleapis.com/css?family=Raleway:800|Merriweather+Sans|Share+Tech+Mono");
-:root {
+/* @import url("https://fonts.googleapis.com/css?family=Raleway:800|Merriweather+Sans|Share+Tech+Mono");
+ */:root {
   --logo-font: "Share Tech Mono", monospace;
   --header-font: "Raleway", sans-serif;
   --core-font: "Merriweather Sans", sans-serif;
@@ -310,4 +310,15 @@ div.userDetailsBar {
 
 #allList>div {
   padding: 0 0.25em;
+}
+
+div.addBooking form#addForm label {
+  margin-bottom: 0;
+  font-style: italic;
+  color: lightgray;
+  font-size: .7em;
+}
+
+.form-group {
+  margin-bottom: .25rem;
 }

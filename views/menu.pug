@@ -37,23 +37,22 @@ div.header
             if role == 'admin'
               li.nav-item  
                 a.nav-link(href="/add") Add
-            if role == 'basic'
-              li.nav-item
-                a.nav-link(
-                  href='/my-agenda'
-                  ) My Agenda
-            if role == 'admin'
+            li.nav-item
+              a.nav-link(
+                href='/my-agenda'
+                ) My Agenda
+            //-if role == 'admin'
               li.nav-item
                 a.nav-link(
                   href='/agenda'
                   ) Agenda
-            if role == 'basic'
-              li.nav-item  
-                a.nav-link(href="/my-bookings") My Bookings
+            //-if role == 'basic'
+            li.nav-item  
+              a.nav-link(href="/my-bookings") My Bookings
+            //-li.nav-item  
+              a.nav-link(href="/list") View All 
+                span.badge.badge-light #{count}
             if role == 'admin'
-              li.nav-item  
-                a.nav-link(href="/list") View All 
-                  span.badge.badge-light #{count}
               li.class.nav-item.dropdown
                 a.nav-link.dropdown-toggle(href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                 ) Tools
@@ -74,7 +73,7 @@ div.container
                   )
           div.input-group-append
             button.btn.btn-secondary(type='submit' id='submit' name="submit") Find
-          if admin
+          if role == 'admin'
             div.input-group-append 
               a.btn.btn.btn-light(href="/add") 
                 span  Add New 

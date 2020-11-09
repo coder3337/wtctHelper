@@ -14,7 +14,7 @@ block content
           else if saveSuccessful
             p.alert.alert-success(role="alert") #{saveSuccessful}
           p Enter booking details here and hit send to save.
-          form(
+          form#addForm(
             action='/edit'
             method='POST'
             autocomplete='off'

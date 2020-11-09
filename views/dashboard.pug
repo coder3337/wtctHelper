@@ -5,7 +5,42 @@ block content
   div.container.bg-white.py-2
     div.dashBoard
       div.view.dashBoardPage
-        div test
+        div Todays new bookings
         div.clearfix
         div.row.col
-          
+        each doc in list
+          -var id = doc._id;
+          -var days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+          -var d = new Date (doc.tourDate)
+          -let dayName = days[d.getDay()];
+          if dayName == 'Sun' 
+            -var dayColor='Blue'
+          if dayName == 'Mon' 
+            -var dayColor='Coral'
+          if dayName == 'Tue' 
+            -var dayColor='Crimson'
+          if dayName == 'Wed' 
+            -var dayColor='DarkOrchid'
+          if dayName == 'Thu' 
+            -var dayColor='LimeGreen'
+          if dayName == 'Fri' 
+            -var dayColor='DeepSkyBlue'
+          if dayName == 'Sat' 
+            -var dayColor='OliveDrab'
+          div.mt-3.pl-3(style='border-left: solid ' + dayColor +  ' 5px;')
+            div.d-flex.justify-content-start
+              span.h2.badge.badge-success.mr-2.text-white()= dayName 
+                div
+                  span.small()= doc.tourDate 
+              h4.d-flex.align-self-center.text-uppercase()= doc.firstName + ' ' + doc.lastName
+              a.h3.badge.badge-success.text-white.ml-2.align-self-center=  'x ' + doc.pax
+            div.d-flex.flex-row
+              p.small= 'Pickup: ' + doc.pickupAddress
+            div.d-flex.justify-content-between
+              div.small= 'Phone: ' + doc.phone
+              div.small= 'Amount Paid: ' + doc.paidStatus
+            if doc.notes
+              div.d-flex.justify-content-between
+                div.small= 'Notes: ' + doc.notes
+            hr
+            
