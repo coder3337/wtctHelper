@@ -19,14 +19,14 @@ module.exports = {
               console.log('Found New Booking:', matchLength);
 
               const ops = require('./controllers/workers/sendNewBookings.js');
-              const calendar = require('./controllers/workers/createCalendarEvents.js');
+              // const calendar = require('./controllers/workers/createCalendarEvents.js');
               const updates = require('./controllers/workers/updateOPBookSent.js');
               // console.log('name:', docs[z].firstName); // prints each name
               // if (docs[z].clientReminderSent === false) {
               ops.sendNewBookingsToOperators(docs, z, envString);
               // create events
-              calendar.createEvents(docs, z, envString);
-              calendar.updateEventCreated(docs, z, envString);
+              // calendar.createEvents(docs, z, envString);
+              // calendar.updateEventCreated(docs, z, envString);
               // update events column in db
               updates.updateBookingSentInDB(docs, z, envString);
 

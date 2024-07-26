@@ -56,23 +56,30 @@ router.put('/user/:userId', userController.allowIfLoggedin, userController.grant
 router.delete('/user/:userId', userController.allowIfLoggedin, userController.grantAccess('deleteAny', 'profile'), userController.deleteUser);
 
 
+const interval = 30000; // 60,000 milliseconds = 1 minute
+setInterval(runStuff, interval);
+
 const Booking = mongoose.model('Booking');
-const dt = require('../public/dates.js');
-const runTasks = require('../getMatches.js');
+function runStuff() {
+  // Your task logic here
+  const dt = require('../public/dates.js');
+  const runTasks = require('../getMatches.js');
 
-const taskNotificationMsg = 'Task ran';
+  const taskNotificationMsg = 'Task ran';
 
-console.log('Date tomorrow', dt.dateTomorrow());
+  console.log('Date tomorrow', dt.dateTomorrow());
 
-runTasks.sendNewBookings();
-runTasks.clientReminders();
-runTasks.reminderOperators();
-runTasks.remindGCGuides();
-runTasks.sendCustomerFeedback();
-// ////////////
-// working on notificaiotns
-// do this next https://wanago.io/2019/06/17/using-push-notifications-with-service-workers-and-node-js/
-console.log(taskNotificationMsg);
+  runTasks.sendNewBookings();
+  runTasks.clientReminders();
+  runTasks.reminderOperators();
+  runTasks.remindGCGuides();
+  runTasks.sendCustomerFeedback();
+  // ////////////
+  // working on notificaiotns
+  // do this next https://wanago.io/2019/06/17/using-push-notifications-with-service-workers-and-node-js/
+  console.log(taskNotificationMsg);
+  console.log('Running tasks from userRoutes...');
+}
 
 
 router.get('/add', (req, res, next) => {
