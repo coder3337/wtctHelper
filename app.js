@@ -9,7 +9,6 @@ const cookieSession = require('cookie-session');
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const path = require('path');
-const port = process.env.PORT || '10000';
 
 const User = require('./model/userModel');
 const userRoutes = require('./routes/userRoutes.js');
@@ -73,6 +72,7 @@ app.use(async (req, res, next) => {
 
 app.use(userRoutes);
 // app.use('/', allRoutes);
+const port = process.env.PORT || '8000';
 
 app.listen(port, hostname, () => {
   console.log(`Server started port http://localhost:${port}`);
