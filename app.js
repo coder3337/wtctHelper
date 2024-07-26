@@ -9,7 +9,7 @@ const cookieSession = require('cookie-session');
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const path = require('path');
-// const port = process.env.PORT || '8000';
+const port = process.env.PORT || '8000';
 
 const User = require('./model/userModel');
 const userRoutes = require('./routes/userRoutes.js');
@@ -25,7 +25,7 @@ app.use(cookieSession({
   secure: false, // change later!
   httpOnly: true, // change later!
   maxAge: 1 * 60 * 60 * 1000, // 1 hours
-  // maxAge: 24 *60 * 60 * 1000, // 24 hours
+  //maxAge: 24 *60 * 60 * 1000, // 24 hours
 }));
 
 app.set('views', path.join(__dirname, 'views'));
@@ -33,7 +33,7 @@ app.set('view engine', 'pug');
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(express.json());
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({ extended: true }));
 
 app.use(userInViews());
 
@@ -59,7 +59,7 @@ app.use(async (req, res, next) => {
       res.locals.accessToken = req.session.accessToken;
       res.locals.loggedInFor = req.session.loggedInFor;
       console.log('Time:', Date.now() + ' ' + res.locals.loggedInUser);
-
+      
       next();
     } catch (error) {
       next(error);
@@ -74,7 +74,7 @@ app.use(async (req, res, next) => {
 app.use(userRoutes);
 // app.use('/', allRoutes);
 
-/* app.listen(port, hostname, () => {
+app.listen(port, host, () => {
   console.log(`Server started port http://localhost:${port}`);
-}); */
+});
 module.exports = app;
