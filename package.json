@@ -10,9 +10,9 @@
     "node": "10.15.1"
   },
   "scripts": {
-    "start": "node app.js",
-    "debug": "set DEBUG=express:* & node node app.js",
-    "dev": "nodemon -e * node app.js",
+    "start": "node ./bin/www",
+    "debug": "set DEBUG=express:* & node ./bin/www",
+    "dev": "nodemon -e * ./bin/www",
     "ui": "browser-sync start --proxy localhost:10000 --files=**/*  --ignore=node_modules --reload-delay 1000 --no-ui --no-notify --no-inject-changes"
   },
   "keywords": [],
