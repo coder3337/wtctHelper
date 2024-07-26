@@ -9,16 +9,14 @@ const cookieSession = require('cookie-session');
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const path = require('path');
-//const port = process.env.PORT || '8000';
+const port = process.env.PORT || '10000';
 
 const User = require('./model/userModel');
 const userRoutes = require('./routes/userRoutes.js');
 const userInViews = require('./middleware/allUsersMiddle');
 // const allRoutes = require('./routes/allRoutes');
 const app = express();
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})
+
 app.set('trust proxy', 1); // trust first proxy
 
 app.use(cookieSession({
@@ -76,7 +74,7 @@ app.use(async (req, res, next) => {
 app.use(userRoutes);
 // app.use('/', allRoutes);
 
-/* app.listen(port, hostname, () => {
+app.listen(port, hostname, () => {
   console.log(`Server started port http://localhost:${port}`);
-}); */
+});
 module.exports = app;
