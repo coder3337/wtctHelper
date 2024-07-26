@@ -74,7 +74,7 @@ app.use(async (req, res, next) => {
 app.use(userRoutes);
 // app.use('/', allRoutes);
 
-app.listen(port, host, () => {
+app.listen(port, () => {
   console.log(`Server started port http://localhost:${port}`);
 });
 module.exports = app;
