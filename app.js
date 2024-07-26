@@ -17,7 +17,7 @@ const userInViews = require('./middleware/allUsersMiddle');
 // const allRoutes = require('./routes/allRoutes');
 const app = express();
 
-app.set('trust proxy', 1); // trust first proxy
+app.set('trust proxy', 0); // trust first proxy
 
 app.use(cookieSession({
   name: 'session',
