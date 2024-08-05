@@ -11,9 +11,7 @@
   },
   "scripts": {
     "start": "node app.js",
-    "debug": "set DEBUG=express:* & node ./bin/www",
-    "dev": "nodemon -e * ./bin/www",
-    "ui": "browser-sync start --proxy localhost:1500 --files=**/*  --ignore=node_modules --reload-delay 1000 --no-ui --no-notify --no-inject-changes"
+    "debug": "set DEBUG=express:* & node app.js"
   },
   "keywords": [],
   "devDependencies": {

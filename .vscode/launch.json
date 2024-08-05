@@ -1,0 +1,35 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Launch WTCTHelper program",
+      "program": "${workspaceFolder}/app.js",
+      "request": "launch",
+      "skipFiles": ["<node_internals>/**"],
+      "type": "node"
+    },
+    {
+      "name": "Launch Chrome (localhost)",
+      "request": "launch",
+      "type": "chrome",
+      "url": "http://localhost:1500",
+      "webRoot": "${workspaceFolder}"
+    } /* ,
+    {
+      "name": "Launch Chrome (local file)",
+      "request": "launch",
+      "type": "chrome",
+      "url": "file:///C:/xampp/htdocs/wtctHelperApp/index.html",
+      "webRoot": "${workspaceFolder}/wtcthelper"
+    } */
+  ],
+  "compounds": [
+    {
+      "name": "Launch Program and Chrome (localhost)",
+      "configurations": [
+        "Launch WTCTHelper program",
+        "Launch Chrome (localhost)"
+      ]
+    }
+  ]
+}

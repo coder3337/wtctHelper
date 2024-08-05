@@ -6,18 +6,11 @@ Date: 2023-01-31
 # WTCT Helper App
 A simple app to help with bookings
 
-## Setup
-1.
+Go to debug tab
+1. Launch program
+2.Launch chrome for frontend
 
-1. First start an apache server on xamp
-2. Open two terminals
-nodemon needs to run first - it will restart express server on file changes
-3. run 'npm run dev' to launch server with nodemon in one terminal
-4. run 'npm run ui' to launch browser-sync in another terminal
-Browser-sync for will open a browser window with the app running listening for changes and reloading the page when changes are made
-
-
-sendmail.ini settings
+# sendmail.ini settings
 
 [sendmail]
 smtp_server=smtp.gmail.com
@@ -28,3 +21,12 @@ smtp_pass=yourpassword
 from_address=youremail@gmail.com
 from_name=Your Name
 
+
+Alternative config in package.json using nodemon and browsersync
+
+ "scripts": {
+    "start": "node app.js",
+    "debug": "set DEBUG=express:* & node ./bin/www",
+    "dev": "nodemon -e * ./bin/www",
+    "ui": "browser-sync start --proxy localhost:1500 --files=**/*  --ignore=node_modules --reload-delay 1000 --no-ui --no-notify --no-inject-changes"
+  },
